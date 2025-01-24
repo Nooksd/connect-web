@@ -3,21 +3,31 @@ import { innovaApi } from "@/services/http";
 
 export const postImage = createAsyncThunk(
   "image/post",
-  async (file) => {
-    const formData = new FormData();
-    formData.append("image", file);
-    const { data } = await innovaApi.post(`/post/image/upload`, formData);
-    return data;
+  async (file, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const { data } = await innovaApi.post(`/post/image/upload`, formData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const postAvatar = createAsyncThunk(
   "avatar/post",
-  async (file) => {
-    const formData = new FormData();
-    formData.append("avatar", file);
-    const { data } = await innovaApi.post(`/avatar/upload`, formData);
-    return data;
+  async (file, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      const { data } = await innovaApi.post(`/avatar/upload`, formData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -32,7 +42,7 @@ const imageSlicer = createSlice({
       })
       .addCase(postAvatar.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
       })
       .addCase(postAvatar.rejected, (state, action) => {
         state.status = "failed";
@@ -45,7 +55,7 @@ const imageSlicer = createSlice({
       })
       .addCase(postImage.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
       })
       .addCase(postImage.rejected, (state, action) => {
         state.status = "failed";

@@ -3,9 +3,13 @@ import { innovaApi } from "@/services/http";
 
 export const fetchBirthdays = createAsyncThunk(
   "/users/birthdays",
-  async ( ) => {
-    const { data } = await innovaApi.get(`/users/birthdays`);
-    return data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.get(`/users/birthdays`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -20,7 +24,7 @@ const birthdaysSlicer = createSlice({
       })
       .addCase(fetchBirthdays.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
         state.birthdays = action.payload.birthdays;
       })
       .addCase(fetchBirthdays.rejected, (state, action) => {

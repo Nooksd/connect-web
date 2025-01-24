@@ -1,4 +1,4 @@
-const SVGFlag = ({ ...props }) => {
+const SVGBell = ({ ...props }) => {
   return (
     <svg viewBox="0 0 13 16" fill="none" {...props}>
       <path
@@ -9,4 +9,4 @@ const SVGFlag = ({ ...props }) => {
   );
 };
 
-export default SVGFlag;
+export default SVGBell;

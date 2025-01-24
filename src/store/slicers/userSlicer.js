@@ -1,128 +1,84 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { innovaApi } from "@/services/http";
 
-export const loginUser = createAsyncThunk(
-  "auth/login",
-  async (loginCredentials, { rejectWithValue }) => {
+export const fetchUsers = createAsyncThunk(
+  "users/fetchUsers",
+  async (query, { rejectWithValue }) => {
     try {
-      const response = await innovaApi.post("/auth/login", loginCredentials);
-
-      return response.data;
-    } catch (error) {
-      if (error.response && error.response.data) {
-        return rejectWithValue(error.response.data);
-      } else {
-        return rejectWithValue(error.message);
-      }
-    }
-  }
-);
-
-export const refreshAccessToken = createAsyncThunk(
-  "auth/refreshToken",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await innovaApi.get("/auth/refresh-token");
-
-      return response.data;
-    } catch (error) {
-      if (error.response && error.response.data) {
-        return rejectWithValue(error.response.data);
-      } else {
-        return rejectWithValue(error.message);
-      }
-    }
-  }
-);
-
-export const setUserFromStorage = createAsyncThunk(
-  "users/get-current-user",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await innovaApi.get("/users/get-current-user");
-      return response.data;
+      const { data } = await innovaApi.get(`/users?name=${query}`);
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-export const logoutUser = createAsyncThunk(
-  "auth/logout",
-  async (_, { rejectWithValue }) => {
+export const fetchUser = createAsyncThunk(
+  "users/fetchUser",
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await innovaApi.post("/auth/logout");
-      return response.data;
+      const { data } = await innovaApi.get(`/users/${userId}`);
+      return data;
     } catch (error) {
-      if (error.response && error.response.data) {
-        return rejectWithValue(error.response.data);
-      } else {
-        return rejectWithValue(error.message);
-      }
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.put(`/users/update/${user.id}`, user);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
 
 const userSlicer = createSlice({
-  name: "user",
-  initialState: {
-    user: null,
-    isAuthenticated: false,
-    loading: false,
-    error: null,
-  },
+  name: "users",
+  initialState: { users: [], appUser: {}, status: "idle", error: null },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+      .addCase(fetchUsers.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.isAuthenticated = true;
-        state.loading = false;
-        state.error = null;
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.users = action.payload.users;
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.user = null;
-        state.isAuthenticated = false;
-        state.loading = false;
-        state.error = action.payload;
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
 
     builder
-      .addCase(setUserFromStorage.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+      .addCase(fetchUser.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(setUserFromStorage.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.isAuthenticated = true;
-        state.loading = false;
-        state.error = null;
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.appUser = action.payload.user;
       })
-      .addCase(setUserFromStorage.rejected, (state, action) => {
-        state.user = null;
-        state.isAuthenticated = false;
-        state.loading = false;
-        state.error = action.payload;
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
 
     builder
-      .addCase(logoutUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+      .addCase(updateUser.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
-        state.isAuthenticated = false;
-        state.loading = false;
-        state.error = null;
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.appUser = action.payload.user;
       })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+      .addCase(updateUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });

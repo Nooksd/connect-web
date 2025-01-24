@@ -3,9 +3,13 @@ import { innovaApi } from "@/services/http";
 
 export const fetchCotifications = createAsyncThunk(
   "notification/get-all",
-  async () => {
-    const { data } = await innovaApi.get(`/notification/get-all`);
-    return data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.get(`/notification/get-all`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -20,7 +24,7 @@ const notificationsSlicer = createSlice({
       })
       .addCase(fetchCotifications.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
         state.notifications = action.payload.notifications;
       })
       .addCase(fetchCotifications.rejected, (state, action) => {

@@ -4,65 +4,64 @@ export const Main = styled.div`
   width: min-content;
   margin: 35px auto;
   height: 100%;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Container = styled.div`
-  width: 500px;
+  width: 720px;
   height: ${(props) => `${props.$height - 220}px`};
   position: relative;
   z-index: 1;
-  border-radius: 20px;
-`;
-
-export const SearchBox = styled.div`
-  width: 100%;
-  height: 40px;
   background-color: ${(props) => props.theme.colors.grey};
-  padding: 0 15px;
   border-radius: 20px;
-  display: flex;
-  align-items: center;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    height: 150px;
+    background-color: ${(props) => props.theme.colors.primary_2};
+    border-radius: 20px 20px 0 0;
+  }
 `;
 
-export const SearchIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  margin-right: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const SearchInput = styled.input`
+export const Content = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${(props) => props.theme.colors.grey};
-  border: none;
-  color: ${(props) => props.theme.colors.primary_dark};
-  font-size: 16px;
-  font-weight: 300;
-  outline: none;
-`;
-
-export const filterBox = styled.div`
-  width: 100%;
-  height: 50px;
+  font-size: 20px;
+  font-weight: 500;
+  flex-direction: column;
+  justify-content: start;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  position: relative;
+  z-index: 3;
+  color: ${(props) => props.theme.colors.primary_dark};
 `;
 
-export const fillterText = styled.span`
+export const Avatar = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 75px 0 17px 0;
+`;
+
+export const Subtitle = styled.span`
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 200;
+  font-style: italic;
+  color: ${(props) => props.theme.colors.primary_dark};
 `;
 
-export const contactsBox = styled.div`
+export const ContactInfo = styled.div`
   width: 100%;
-  height: 85%;
-  background-color: ${(props) => props.theme.colors.grey};
-  border-radius: 20px;
+  height: 100%;
   flex-direction: column;
   margin-bottom: 50px;
   justify-content: start;
@@ -89,15 +88,19 @@ export const contactsBox = styled.div`
   }
 `;
 
-export const ContactListWrapper = styled.div`
+export const userInfoColumns = styled.div`
   margin-top: 30px;
-  width: 100%;
+  width: min-content;
   height: min-content;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
-  justify-items: center;
   gap: 40px;
+`;
+
+export const title = styled.span`
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 export const ListTile = styled.div`
@@ -108,13 +111,7 @@ export const ListTile = styled.div`
   gap: 16px;
   width: 100%;
   white-space: nowrap;
-  padding: 6px 50px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary_2};
-    color: ${(props) => props.theme.colors.background};
-  }
+  border-radius: 8px;
 `;
 
 export const TileLeading = styled.div`
@@ -125,13 +122,6 @@ export const TileLeading = styled.div`
   height: 48px;
   border-radius: 50%;
   background-color: ${(props) => props.theme.colors.primary_light};
-`;
-
-export const avatar = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
 `;
 
 export const TileContent = styled.div`
@@ -145,6 +135,7 @@ export const TileContent = styled.div`
 export const TileTitle = styled.div`
   font-size: 16px;
   font-weight: bold;
+  color: ${(props) => props.theme.colors.text};
 `;
 
 export const TileSubtitle = styled.div`

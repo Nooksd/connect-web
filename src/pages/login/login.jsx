@@ -1,16 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "@/store/slicers/userSlicer.js";
+import { loginUser } from "@/store/slicers/authSlicer.js";
 import { Link, useNavigate } from "react-router-dom";
 
 import * as styled from "./loginStyles.js";
 
-import SVGlogowhite from "@/assets/logo/innova_logo_white.jsx";
-import SVGLock from "@/assets/icons/login/Lock_icon.jsx";
-import SVGPerson from "@/assets/icons/login/Person_icon.jsx";
-import SVGSeePassword from "@/assets/icons/login/See_password_icon.jsx";
-import SVGWarning from "@/assets/icons/login/Warning_icon.jsx";
-import SVGArrowDown from "@/assets/icons/header/Arrow_icon.jsx";
+import icons from '@/assets/icons';
+import SVGlogowhite from "../../assets/logo/innova_logo_white.jsx";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -126,14 +122,14 @@ export const Login = () => {
         <styled.BlueLoginBlock>
           <Link to="/feed">
             <styled.SkipButton>
-              <SVGArrowDown width="25" height="25" open={false} fill="white" />
+              <icons.SVGArrowDown width="25" height="25" open={false} fill="white" />
             </styled.SkipButton>
           </Link>
           <SVGlogowhite fill="white" width="220px" />
           <styled.LoginTitle>Login</styled.LoginTitle>
           <styled.LoginForm onSubmit={handleLoginEvent}>
             <styled.FormDiv>
-              <SVGPerson width="30" height="30" />
+              <icons.SVGPerson width="30" height="30" />
               <styled.LoginInput
                 $loginError={!emailError}
                 value={email}
@@ -145,13 +141,13 @@ export const Login = () => {
               />
               {emailError && (
                 <styled.ErrorOnInputField>
-                  <SVGWarning />
+                  <icons.SVGWarning />
                   {emailError}
                 </styled.ErrorOnInputField>
               )}
             </styled.FormDiv>
             <styled.FormDiv>
-              <SVGLock width="30" height="30" />
+              <icons.SVGLock width="30" height="30" />
               <styled.LoginInput
                 $loginError={!passwordError}
                 value={password}
@@ -163,14 +159,14 @@ export const Login = () => {
               />
               {passwordError && (
                 <styled.ErrorOnInputField>
-                  <SVGWarning />
+                  <icons.SVGWarning />
                   {passwordError}
                 </styled.ErrorOnInputField>
               )}
               <styled.SeePasswordDiv
                 onClick={() => setIsPasswordVisible((prevState) => !prevState)}
               >
-                <SVGSeePassword
+                <icons.SVGSeePassword
                   show={isPasswordVisible}
                   width="20"
                   height="20"

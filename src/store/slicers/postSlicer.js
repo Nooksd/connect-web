@@ -3,67 +3,104 @@ import { innovaApi } from "@/services/http";
 
 export const fetchPosts = createAsyncThunk(
   "posts/get-all",
-  async (pageIndex) => {
-    const { data } = await innovaApi.get(`/post/get?page=${pageIndex}`);
-    return data;
+  async (pageIndex, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.get(`/post/get?page=${pageIndex}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const fetchPost = createAsyncThunk(
-  "posts/get", 
-  async (postId) => {
-    const { data } = await innovaApi.get(`/post/get/${postId}`);
-    return data;
+  "posts/get",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.get(`/post/get/${postId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const createPost = createAsyncThunk(
   "posts/create",
-  async (post) => {
-    const { data } = await innovaApi.post(`/post/create`, post);
-    return data;
+  async (post, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.post(`/post/create`, post);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 export const deletePost = createAsyncThunk(
   "posts/delete",
-  async (postId) => {
-    const { data } = await innovaApi.delete(`/post/delete/${postId}`);
-    return data;
+  async (postId, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.delete(`/post/delete/${postId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 export const likePost = createAsyncThunk(
   "posts/like",
-  async (postId) => {
-    const { data } = await innovaApi.post(`/post/like/${postId}`);
-    return data;
+  async (postId, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.post(`/post/like/${postId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 export const unlikePost = createAsyncThunk(
   "posts/unlike",
-  async (postId) => {
-    const { data } = await innovaApi.post(`/post/unlike/${postId}`);
-    return data;
+  async (postId, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.post(`/post/unlike/${postId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 export const commentPost = createAsyncThunk(
   "posts/comment",
-  async (data) => {
-    const { data } = await innovaApi.post(`/post/comment${data.postId}`, data.comment);
-    return data;
+  async (body, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.post(
+        `/post/comment/${body.postId}`,
+        body.comment
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 export const deleteComment = createAsyncThunk(
   "posts/deleteComment",
-  async (data) => {
-    const { data } = await innovaApi.delete(`/post/comment/delete/${data.postId}/${data.commentId}`);
-    return data;
+  async (body, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.delete(
+        `/post/comment/delete/${body.postId}/${body.commentId}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 const postsSlicer = createSlice({
   name: "posts",
@@ -76,7 +113,7 @@ const postsSlicer = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
         state.posts = action.payload.posts;
       })
       .addCase(fetchPosts.rejected, (state, action) => {

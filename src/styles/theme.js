@@ -2,13 +2,11 @@
 
 const generalColors = {
   primary_dark: "#172242",
-  primary_light: "#8ea1d7",
   primary_1: "#2E4483",
   primary_2: "#2257A8",
   secondary_1: "#95C11F",
   secondary_2: "#B0D159",
-  secondary_3: "#F3F9E6",
-  grey: "#E6E6E6",
+  grey: "#f6f8fd",
 
   danger: "#cc3333",
   dangerText: "#87141f",

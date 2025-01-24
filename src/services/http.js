@@ -1,5 +1,5 @@
 import axios from "axios";
-import { refreshAccessToken } from "@/store/slicers/userSlicer";
+import { refreshAccessToken } from "@/store/slicers/authSlicer";
 import store from "@/store";
 
 export const innovaApi = axios.create({

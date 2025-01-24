@@ -3,19 +3,29 @@ import { innovaApi } from "@/services/http";
 
 export const fetchMissions = createAsyncThunk(
   "mission/get-all",
-  async () => {
-    const { data } = await innovaApi.get(`/mission/get-all`);
-    return data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.get(`/mission/get-all`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const verifyCompletion = createAsyncThunk(
   "mission/verify-completion",
-  async (missionId) => {
-    const { data } = await innovaApi.post(`/mission/verify-completion/${missionId}`);
-    return data;
+  async (missionId, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.post(
+        `/mission/verify-completion/${missionId}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-)
+);
 
 const missionsSlicer = createSlice({
   name: "missions",
@@ -28,7 +38,7 @@ const missionsSlicer = createSlice({
       })
       .addCase(fetchMissions.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
         state.missions = action.payload.missions;
       })
       .addCase(fetchMissions.rejected, (state, action) => {
@@ -42,7 +52,7 @@ const missionsSlicer = createSlice({
       })
       .addCase(verifyCompletion.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
+        console.log(action.payload);
       })
       .addCase(verifyCompletion.rejected, (state, action) => {
         state.status = "failed";

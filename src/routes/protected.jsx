@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserFromStorage } from "@/store/slicers/userSlicer";
+import { useParams } from "react-router-dom";
+import { getCurrentUser } from "@/store/slicers/authSlicer";
 
 import { NavbarContentContainer } from "@/styles/global";
 
@@ -9,21 +10,23 @@ import Header from "@/pages/components/header/header";
 import Toast from "@/pages/components/toast/toast";
 import Modal from "@/pages/components/modal/modal";
 
-import { Error404 } from "@/pages/Secundary/error404/404";
-import { Feed } from "@/pages/feed/feed";
-import SVGFeed from "../assets/icons/page_icons/feed";
-import SVGMissions from "../assets/icons/page_icons/missions";
-import SVGShop from "../assets/icons/page_icons/shop";
-import SVGEvents from "../assets/icons/page_icons/events";
-import SVGContacts from "../assets/icons/page_icons/contacts";
-import SVGBirthdays from "../assets/icons/page_icons/birthdays";
+import icons from "@/assets/icons";
+
 import { Missions } from "../pages/missions/missions";
+import { Error404 } from "@/pages/error404/404";
+import { Feed } from "@/pages/feed/feed";
 import { Shop } from "../pages/shop/shop";
 import { Events } from "../pages/events/events";
 import { Contacts } from "../pages/contacts/contacts";
 import { Birthdays } from "../pages/birthdays/birthdays";
+import { Profile } from "../pages/profile/profile";
 
 const ProtectedRouter = () => {
+  const { "*": wildcard } = useParams();
+
+  const currentPath = wildcard?.split("/") || [];
+  const [basePath, param] = currentPath;
+
   const [isLoading, setIsLoading] = useState(true);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
@@ -42,7 +45,7 @@ const ProtectedRouter = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { user, loading, isAuthenticated } = useSelector((state) => state.user);
+  const { user, loading, isAuthenticated } = useSelector((state) => state.auth);
 
   const normalizeString = (str) => {
     return str
@@ -55,7 +58,6 @@ const ProtectedRouter = () => {
     {
       path: "feed",
       name: "Feed",
-      isRestricted: true,
       component: (
         <Feed
           windowHeight={windowHeight}
@@ -64,12 +66,11 @@ const ProtectedRouter = () => {
           modalInfo={modalMessage}
         />
       ),
-      icon: <SVGFeed width="30px" />,
+      icon: <icons.SVGFeed width="30px" />,
     },
     {
       path: "missoes",
       name: "Missões",
-      isRestricted: true,
       component: (
         <Missions
           windowHeight={windowHeight}
@@ -78,12 +79,12 @@ const ProtectedRouter = () => {
           modalInfo={modalMessage}
         />
       ),
-      icon: <SVGMissions width="30px" />,
+      icon: <icons.SVGMissions width="30px" />,
     },
     {
       path: "beneficios",
       name: "Benefícios",
-      isRestricted: true,
+      hidden: true,
       component: (
         <Shop
           windowHeight={windowHeight}
@@ -92,12 +93,12 @@ const ProtectedRouter = () => {
           modalInfo={modalMessage}
         />
       ),
-      icon: <SVGShop width="30px" />,
+      icon: <icons.SVGShop width="30px" />,
     },
     {
       path: "eventos",
       name: "Eventos",
-      isRestricted: true,
+      hidden: true,
       component: (
         <Events
           windowHeight={windowHeight}
@@ -106,12 +107,11 @@ const ProtectedRouter = () => {
           modalInfo={modalMessage}
         />
       ),
-      icon: <SVGEvents width="30px" />,
+      icon: <icons.SVGEvents width="30px" />,
     },
     {
       path: "contatos",
       name: "Contaos",
-      isRestricted: true,
       component: (
         <Contacts
           windowHeight={windowHeight}
@@ -120,12 +120,11 @@ const ProtectedRouter = () => {
           modalInfo={modalMessage}
         />
       ),
-      icon: <SVGContacts width="30px" />,
+      icon: <icons.SVGContacts width="30px" />,
     },
     {
       path: "aniversarios",
       name: "Aniversários",
-      isRestricted: true,
       component: (
         <Birthdays
           windowHeight={windowHeight}
@@ -134,7 +133,21 @@ const ProtectedRouter = () => {
           modalInfo={modalMessage}
         />
       ),
-      icon: <SVGBirthdays width="30px" />,
+      icon: <icons.SVGBirthdays width="30px" />,
+    },
+    {
+      path: "perfil",
+      name: "Perfil",
+      hidden: true,
+      component: (
+        <Profile
+          windowHeight={windowHeight}
+          toastMessage={setToastMessage}
+          modalMessage={setModalMessage}
+          modalInfo={modalMessage}
+        />
+      ),
+      icon: <icons.SVGProfile width="30px" />,
     },
   ];
 
@@ -156,8 +169,9 @@ const ProtectedRouter = () => {
         setIsLoading(false);
         return;
       }
+
       try {
-        dispatch(setUserFromStorage());
+        dispatch(getCurrentUser());
       } finally {
         setIsLoading(false);
       }
@@ -166,15 +180,11 @@ const ProtectedRouter = () => {
   }, [dispatch, isAuthenticated]);
 
   const renderPageContent = () => {
-    const currentPage = normalizeString(
-      location.pathname.substring(1).toLowerCase()
-    );
-
-    const page = pages.find((p) => normalizeString(p.path) === currentPage);
+    const page = pages.find((p) => p.path === basePath);
 
     if (!page) return <Error404 />;
 
-    return page.component;
+    return React.cloneElement(page.component, { param });
   };
 
   const getPageData = () => {
@@ -204,8 +214,8 @@ const ProtectedRouter = () => {
       <Modal modalMessage={modalMessage} setModalMessage={setModalMessage} />
       <Header
         pages={pages}
-        page={pageData.name}
-        icon={pageData.icon}
+        page={pageData?.name}
+        icon={pageData?.icon}
         logged={true}
         selectedPage={currentPage}
       />
