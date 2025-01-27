@@ -32,6 +32,10 @@ import SVGRole from './profile/role_icon.jsx';
 import SVGSearch from './profile/search_icon.jsx';
 import SVGFilter from './profile/filter_icon.jsx';
 
+import SVGTime from './missions/time_icon.jsx';
+import SVGTrophy from './missions/trophy_icon.jsx';
+import SVGMedal from './missions/medal_icon.jsx';
+
 const icons = {
   SVGError404,
   SVGInnova404,
@@ -60,7 +64,10 @@ const icons = {
   SVGPhone,
   SVGRole,
   SVGSearch,
-  SVGFilter
+  SVGFilter,
+  SVGTime,
+  SVGTrophy,
+  SVGMedal
 };
 
 export default icons;

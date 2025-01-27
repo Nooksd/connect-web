@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const ColorSVG = styled.svg`
-  fill: ${(props) => props.theme.colors.primary_dark};
+  fill: ${(props) => props.theme.colors.secondary_1};
   path {
     fill: ${(props) => props.theme.colors.primary_dark};
   }

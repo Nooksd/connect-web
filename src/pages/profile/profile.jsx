@@ -22,7 +22,7 @@ export const Profile = ({ param, windowHeight }) => {
     } else {
       setProfile(user);
     }
-  }, [dispatch]);
+  }, [dispatch, param]);
 
   const formatDate = (timestamp) =>
     format(new Date(timestamp), "dd/MM/yyyy", { locale: ptBR });
@@ -34,7 +34,11 @@ export const Profile = ({ param, windowHeight }) => {
     <styled.Main>
       <styled.Container $height={windowHeight}>
         <styled.Content>
-          <styled.Avatar src={profile.profilePictureUrl} />
+          <styled.Leading>
+            <styled.Avatar
+              src={`${profile.profilePictureUrl}?=${new Date().getDate()}`}
+            />
+          </styled.Leading>
           {profile.name}
           <styled.Subtitle>{profile.role}</styled.Subtitle>
           <styled.ContactInfo>

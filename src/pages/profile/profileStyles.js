@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Main = styled.div`
   width: min-content;
-  margin: 35px auto;
   height: 100%;
   display: flex;
   gap: 100px;
@@ -45,11 +44,22 @@ export const Content = styled.div`
   color: ${(props) => props.theme.colors.primary_dark};
 `;
 
-export const Avatar = styled.img`
+export const Leading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 150px;
   height: 150px;
   border-radius: 50%;
   margin: 75px 0 17px 0;
+  background-color: ${(props) => props.theme.colors.primary_light};
+  `;
+
+export const Avatar = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
 `;
 
 export const Subtitle = styled.span`

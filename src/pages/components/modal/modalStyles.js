@@ -16,7 +16,6 @@ export const modalBackgroundDiv = styled.div`
 export const modalContainerDiv = styled.div`
   width: 550px;
   position: relative;
-  height: 300px;
   z-index: 10000;
   border-radius: 5px;
   padding: 20px;
@@ -118,5 +117,25 @@ export const responseButton = styled.button`
 
   &:hover {
     background-color: ${(props) => props.theme.colors.secondary_1};
+  }
+`;
+
+export const inputWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
+export const inputField = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid ${(props) => props.theme.colors.primary_2};
+  border-radius: 5px;
+  font-size: 16px;
+  color: ${(props) => props.theme.colors.primary_dark};
+  background-color: ${(props) => props.theme.colors.background};
+  outline: none;
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.secondary_2};
   }
 `;

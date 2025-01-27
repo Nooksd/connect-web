@@ -24,7 +24,6 @@ const birthdaysSlicer = createSlice({
       })
       .addCase(fetchBirthdays.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.birthdays = action.payload.birthdays;
       })
       .addCase(fetchBirthdays.rejected, (state, action) => {

@@ -38,8 +38,10 @@ const ProtectedRouter = () => {
   const [modalMessage, setModalMessage] = useState({
     response: null,
     event: null,
+    userInput: null,
     message: "",
     title: "",
+    hintText: "",
   });
 
   const dispatch = useDispatch();

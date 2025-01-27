@@ -4,6 +4,9 @@ export const Main = styled.div`
   width: min-content;
   margin: 35px auto;
   height: 100%;
+  display: flex;
+  gap: 50px;
+  align-items: start;
 `;
 
 export const Container = styled.div`
@@ -14,7 +17,7 @@ export const Container = styled.div`
   border-radius: 20px;
 `;
 
-export const SearchBox = styled.div`
+export const SearchBox = styled.form`
   width: 100%;
   height: 40px;
   background-color: ${(props) => props.theme.colors.grey};
@@ -51,6 +54,7 @@ export const filterBox = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  cursor: pointer;
 `;
 
 export const fillterText = styled.span`
@@ -97,7 +101,7 @@ export const ContactListWrapper = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   justify-items: center;
-  gap: 40px;
+  gap: 20px;
 `;
 
 export const ListTile = styled.div`
@@ -110,6 +114,9 @@ export const ListTile = styled.div`
   white-space: nowrap;
   padding: 6px 50px;
   cursor: pointer;
+  background-color: ${(props) =>
+    props.$selected ? props.theme.colors.secondary_2 : null};
+  color: ${(props) => (props.$selected ? props.theme.colors.background : null)};
 
   &:hover {
     background-color: ${(props) => props.theme.colors.secondary_2};

@@ -5,7 +5,7 @@ import userReducer from "./slicers/userSlicer.js";
 import postReducer from "./slicers/postSlicer.js";
 import birthdayReducer from "./slicers/birthdaysSlicer.js";
 import imageReducer from "./slicers/imageSlicer.js";
-import missionsReducer from "./slicers/missionsSlice.js";
+import missionsReducer from "./slicers/missionsSlicer.js";
 import notificationsReducer from "./slicers/notificationsSlicer.js";
 
 const store = configureStore({
