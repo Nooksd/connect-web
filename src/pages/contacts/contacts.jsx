@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "@/store/slicers/userSlicer.js";
-import { useNavigate } from "react-router-dom";
 
 import * as styled from "./contactsStyles.js";
 import icons from "@/assets/icons";
@@ -13,10 +12,11 @@ export const Contacts = ({ windowHeight }) => {
   const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchUsers(search));
+    if (users.length === 0) {
+      dispatch(fetchUsers(search));
+    }
   }, [dispatch]);
 
   const searchUser = (e) => {
@@ -27,46 +27,42 @@ export const Contacts = ({ windowHeight }) => {
 
   return (
     <styled.Main>
-        <styled.Container $height={windowHeight}>
-          <styled.SearchBox onSubmit={(e) => searchUser(e)}>
-            <styled.SearchIcon>
-              <icons.SVGSearch />
-            </styled.SearchIcon>
-            <styled.SearchInput
-              placeholder="Procurar pessoas"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </styled.SearchBox>
-          <styled.filterBox>
-            <icons.SVGFilter />
-            <styled.fillterText>Filtrar contatos</styled.fillterText>
-          </styled.filterBox>
-          <styled.contactsBox>
-            <styled.ContactListWrapper>
-              {users &&
-                users.map((user, index) => (
-                  <styled.ListTile
-                    key={index}
-                    $selected={selectedUser === user.uid}
-                    onClick={() => setSelectedUser(user.uid)}
-                  >
-                    <styled.TileLeading>
-                      <styled.avatar
-                        src={`${
-                          user.profilePictureUrl
-                        }?=${new Date().getDate()}`}
-                      />
-                    </styled.TileLeading>
-                    <styled.TileContent>
-                      <styled.TileTitle>{user.name}</styled.TileTitle>
-                      <styled.TileSubtitle>{user.role}</styled.TileSubtitle>
-                    </styled.TileContent>
-                  </styled.ListTile>
-                ))}
-            </styled.ContactListWrapper>
-          </styled.contactsBox>
-        </styled.Container>
+      <styled.Container $height={windowHeight}>
+        <styled.SearchBox onSubmit={(e) => searchUser(e)}>
+          <styled.SearchIcon>
+            <icons.SVGSearch />
+          </styled.SearchIcon>
+          <styled.SearchInput
+            placeholder="Procurar pessoas"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </styled.SearchBox>
+        <styled.filterBox>
+          <icons.SVGFilter />
+          <styled.fillterText>Filtrar contatos</styled.fillterText>
+        </styled.filterBox>
+        <styled.ListBox>
+          <styled.ListWrapper>
+            {users &&
+              users.map((user, index) => (
+                <styled.ListTile
+                  key={index}
+                  $selected={selectedUser === user.uid}
+                  onClick={() => setSelectedUser(user.uid)}
+                >
+                  <styled.TileLeading>
+                    <styled.avatar src={user.profilePictureUrl} />
+                  </styled.TileLeading>
+                  <styled.TileContent>
+                    <styled.TileTitle>{user.name}</styled.TileTitle>
+                    <styled.TileSubtitle>{user.role}</styled.TileSubtitle>
+                  </styled.TileContent>
+                </styled.ListTile>
+              ))}
+          </styled.ListWrapper>
+        </styled.ListBox>
+      </styled.Container>
       {selectedUser && (
         <Profile windowHeight={windowHeight} param={selectedUser} />
       )}

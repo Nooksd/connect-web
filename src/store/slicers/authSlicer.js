@@ -139,6 +139,11 @@ const authSlicer = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
+
+    builder
+      .addCase(updateCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+      })
   },
 });
 

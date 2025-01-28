@@ -186,7 +186,7 @@ export const Login = () => {
                 </styled.KeepLoggedLabel>
               </styled.KeepLoggedDiv>
               <a
-                href="https://api.whatsapp.com/send/?phone=%2B5534999232388&text=Ol%C3%A1%2C+tudo+bem%3F+Estou+com+problemas+para+fazer+login&type=phone_number&app_absent=0"
+                href="https://api.whatsapp.com/send/?phone=%2B5534992710321&text=Ol%C3%A1%2C+tudo+bem%3F+Estou+com+problemas+para+fazer+login&type=phone_number&app_absent=0"
                 target="_blank"
               >
                 <styled.ForgotPassP>Problemas com o Login?</styled.ForgotPassP>

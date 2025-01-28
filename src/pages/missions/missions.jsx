@@ -25,7 +25,9 @@ export const Missions = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMissions());
+    if (missions.length === 0) {
+      dispatch(fetchMissions());
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -68,7 +70,6 @@ export const Missions = ({
   };
 
   const verifyMissionCompletion = (missionId, missionType) => {
-    console.log(missionType, missionId);
     if (appMissions.includes(missionType)) {
       dispatch(verifyCompletion(missionId)).then((result) => {
         if (!result.meta.rejectedWithValue) {
@@ -102,7 +103,7 @@ export const Missions = ({
     const body = {
       missionId: missionId,
       url: url,
-    }
+    };
     dispatch(validationCreate(body)).then((result) => {
       if (!result.meta.rejectedWithValue) {
         toastMessage({
@@ -118,7 +119,7 @@ export const Missions = ({
         });
       }
     });
-  }
+  };
 
   return (
     <styled.Main>
@@ -127,29 +128,30 @@ export const Missions = ({
         <styled.Container>
           <styled.Box>
             <styled.ListWrapper>
-              {missions.map((mission, index) => {
-                if (mission.completed.includes(user.uid)) return null;
-                return (
-                  <styled.ListTile
-                    key={index}
-                    onClick={() =>
-                      verifyMissionCompletion(mission.id, mission.missionType)
-                    }
-                  >
-                    <styled.TileLeading>
-                      <icons.SVGTime width="20" />
-                      {formatTimeLeft(mission.endDate)}
-                    </styled.TileLeading>
-                    <styled.TileContent>
-                      <styled.TileTitle>{mission.text}</styled.TileTitle>
-                    </styled.TileContent>
-                    <styled.TileSubtitle>
-                      {`+${mission.value}`}
-                      <img src={innovaCoin} width="20" />
-                    </styled.TileSubtitle>
-                  </styled.ListTile>
-                );
-              })}
+              {missions &&
+                missions.map((mission, index) => {
+                  if (mission.completed.includes(user.uid)) return null;
+                  return (
+                    <styled.ListTile
+                      key={index}
+                      onClick={() =>
+                        verifyMissionCompletion(mission.id, mission.missionType)
+                      }
+                    >
+                      <styled.TileLeading>
+                        <icons.SVGTime width="20" />
+                        {formatTimeLeft(mission.endDate)}
+                      </styled.TileLeading>
+                      <styled.TileContent>
+                        <styled.TileTitle>{mission.text}</styled.TileTitle>
+                      </styled.TileContent>
+                      <styled.TileSubtitle>
+                        {`+${mission.value}`}
+                        <img src={innovaCoin} width="20" />
+                      </styled.TileSubtitle>
+                    </styled.ListTile>
+                  );
+                })}
             </styled.ListWrapper>
           </styled.Box>
         </styled.Container>

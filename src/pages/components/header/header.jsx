@@ -56,11 +56,14 @@ const Header = ({ pages, logged, page, icon, selectedPage }) => {
                   <SVGBell width="11" height="16" />
                 </styled.RoundButton>
               </Link>
-              <Link to="/ajuda">
+              <a
+                href="https://api.whatsapp.com/send/?phone=%2B5534992710321&text=Ol%C3%A1%2C+tudo+bem%3F+Estou+com+problemas+para+fazer+login&type=phone_number&app_absent=0"
+                target="_blank"
+              >
                 <styled.RoundButton>
                   <SVGQuestionmark width="10" height="17" />
                 </styled.RoundButton>
-              </Link>
+              </a>
               <Link to="/configuracoes">
                 <styled.RoundButton>
                   <SVGEngine width="15" height="15" />
@@ -114,7 +117,7 @@ const Header = ({ pages, logged, page, icon, selectedPage }) => {
       </styled.NavBar1>
       <styled.NavBar2>
         {pages.map((page, index) => {
-          if(page.hidden) return null;
+          if (page.hidden) return null;
           return (
             <Link to={"/" + page.path} key={index}>
               <styled.pageButton $selected={selectedPage === page.path}>

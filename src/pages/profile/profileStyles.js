@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Main = styled.div`
   width: min-content;
+  margin: ${props => props.$profile ? "35px auto" : 0};
   height: 100%;
   display: flex;
   gap: 100px;

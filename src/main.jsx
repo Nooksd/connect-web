@@ -6,6 +6,7 @@ import store from "./store";
 import Router from "./routes/router.jsx";
 
 import "./styles/global.css";
+import "./styles/icons.css";
 
 const ThemedApp = () => {
   const selectedTheme = useSelector((state) => state.theme);

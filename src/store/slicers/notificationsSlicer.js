@@ -1,11 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { innovaApi } from "@/services/http";
 
-export const fetchCotifications = createAsyncThunk(
+export const fetchNotifications = createAsyncThunk(
   "notification/get-all",
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await innovaApi.get(`/notification/get-all`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const readNotification = createAsyncThunk(
+  "notification/read",
+  async (notificationId, { rejectWithValue }) => {
+    try {
+      const { data } = await innovaApi.put(
+        `/notification/read/${notificationId}`
+      );
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -19,15 +33,26 @@ const notificationsSlicer = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCotifications.pending, (state) => {
+      .addCase(fetchNotifications.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchCotifications.fulfilled, (state, action) => {
+      .addCase(fetchNotifications.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.notifications = action.payload.notifications;
       })
-      .addCase(fetchCotifications.rejected, (state, action) => {
+      .addCase(fetchNotifications.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(readNotification.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(readNotification.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      })
+      .addCase(readNotification.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

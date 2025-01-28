@@ -17,7 +17,6 @@ export const Profile = ({ param, windowHeight }) => {
     if (param) {
       dispatch(fetchUser(param)).then((result) => {
         setProfile(result.payload);
-        console.log(result.payload);
       });
     } else {
       setProfile(user);
@@ -31,12 +30,12 @@ export const Profile = ({ param, windowHeight }) => {
     format(new Date(timestamp), "dd 'de' MMMM", { locale: ptBR });
 
   return (
-    <styled.Main>
+    <styled.Main $profile={param ? false : true}>
       <styled.Container $height={windowHeight}>
         <styled.Content>
           <styled.Leading>
             <styled.Avatar
-              src={`${profile.profilePictureUrl}?=${new Date().getDate()}`}
+              src={profile.profilePictureUrl}
             />
           </styled.Leading>
           {profile.name}

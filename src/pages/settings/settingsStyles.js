@@ -5,8 +5,9 @@ export const Main = styled.div`
   margin: 35px auto;
   height: 100%;
   display: flex;
-  gap: 50px;
-  align-items: start;
+  gap: 100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Container = styled.div`
@@ -17,57 +18,18 @@ export const Container = styled.div`
   border-radius: 20px;
 `;
 
-export const SearchBox = styled.form`
-  width: 100%;
-  height: 40px;
-  background-color: ${(props) => props.theme.colors.grey};
-  padding: 0 15px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-export const SearchIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  margin-right: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const SearchInput = styled.input`
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.colors.grey};
-  border: none;
-  color: ${(props) => props.theme.colors.primary_dark};
-  font-size: 16px;
-  font-weight: 300;
-  outline: none;
-`;
-
-export const filterBox = styled.div`
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-`;
-
-export const fillterText = styled.span`
-  font-size: 16px;
-  font-weight: 500;
+export const icon = styled.span`
+  font-size: 28px;
+  color: ${(props) => props.theme.colors.primary_2};
 `;
 
 export const ListBox = styled.div`
   width: 100%;
-  height: 85%;
+  height: 100%;
   background-color: ${(props) => props.theme.colors.grey};
   border-radius: 20px;
   flex-direction: column;
+  margin-bottom: 50px;
   justify-content: start;
   display: flex;
   align-items: center;
@@ -92,15 +54,6 @@ export const ListBox = styled.div`
   }
 `;
 
-export const ListWrapper = styled.div`
-  width: 100%;
-  height: min-content;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  justify-items: center;
-`;
-
 export const ListTile = styled.div`
   display: flex;
   align-items: center;
@@ -108,15 +61,22 @@ export const ListTile = styled.div`
   text-overflow: ellipsis;
   gap: 16px;
   width: 100%;
-  white-space: nowrap;
   border-radius: 20px;
+  white-space: nowrap;
   padding: 20px 50px;
   cursor: pointer;
-  background-color: ${(props) =>
-    props.$selected ? "rgba(0, 0, 0, .05)" : null};
 
   &:hover {
     background-color: ${(props) => "rgba(0, 0, 0, .05)"};
+  }
+
+  &:last-child {
+    background-color: ${(props) => props.theme.colors.dangerBackColor};
+    color: ${(props) => props.theme.colors.danger};
+
+    span {
+      color: ${(props) => props.theme.colors.danger};
+    }
   }
 `;
 
@@ -130,13 +90,6 @@ export const TileLeading = styled.div`
   background-color: ${(props) => props.theme.colors.primary_light};
 `;
 
-export const avatar = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
 export const TileContent = styled.div`
   flex: 1;
   width: min-content;
@@ -145,15 +98,7 @@ export const TileContent = styled.div`
   flex-direction: column;
 `;
 
-export const TileTitle = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-`;
-
-export const TileSubtitle = styled.div`
-  font-size: 14px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 200px;
-  color: ${(props) => props.theme.colors.text_secondary};
+export const TileTitle = styled.h1`
+  font-size: 18px;
+  font-weight: 500;
 `;

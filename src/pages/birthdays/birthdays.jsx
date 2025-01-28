@@ -16,7 +16,9 @@ export const Birthdays = ({ windowHeight }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchBirthdays());
+    if (birthdays.length === 0) {
+      dispatch(fetchBirthdays());
+    }
   }, [dispatch]);
 
   const formatDate = (timestamp) =>
@@ -45,9 +47,7 @@ export const Birthdays = ({ windowHeight }) => {
               {birthdays.map((user, index) => (
                 <styled.ListTile key={index}>
                   <styled.TileLeading>
-                    <styled.avatar
-                      src={`${user.profilePictureUrl}?=${new Date().getDate()}`}
-                    />
+                    <styled.avatar src={user.profilePictureUrl} />
                   </styled.TileLeading>
                   <styled.TileContent>
                     <styled.TileTitle>{user.name}</styled.TileTitle>
@@ -71,7 +71,7 @@ export const Birthdays = ({ windowHeight }) => {
               <styled.bigAvatar
                 key={index}
                 $index={index}
-                src={`${user.profilePictureUrl}?=${new Date().getDate()}`}
+                src={user.profilePictureUrl}
               />
             ))}
           </styled.avatarContainer>
@@ -81,7 +81,10 @@ export const Birthdays = ({ windowHeight }) => {
               <h4>{user.role}</h4>
             </styled.textWrapper>
           ))}
-          <styled.congratsButton onClick={handleCongrats}>
+          <styled.congratsButton
+            onClick={handleCongrats}
+            disabled={showConfetti}
+          >
             👏
           </styled.congratsButton>
         </styled.Container2>

@@ -1,27 +1,46 @@
 import styled from "styled-components";
 
 export const Main = styled.div`
-    width: min-content;
-    margin: 35px auto;
-    height: 100%;
-    display: flex;
-    gap: 100px;
-    justify-content: center;
-    align-items: center;
+  width: min-content;
+  margin: 35px auto;
+  height: 100%;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Container = styled.div`
   width: 500px;
-  height: ${(props) => `${props.$height - 220}px`};
+  margin-top: 80px;
+  height: ${(props) => `${props.$height - 300}px`};
+  padding-top: 100px;
   position: relative;
   z-index: 1;
   border-radius: 20px;
+  background-color: ${(props) => props.theme.colors.grey};
 `;
 
-export const ListBox = styled.div`
+export const BigAvatar = styled.img`
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+`;
+
+export const icon = styled.span`
+  font-size: 28px;
+  color: ${(props) => props.theme.colors.primary_2};
+`;
+
+export const ListBox = styled.form`
   width: 100%;
   height: 100%;
-  background-color: ${(props) => props.theme.colors.grey};
   border-radius: 20px;
   flex-direction: column;
   margin-bottom: 50px;
@@ -56,21 +75,9 @@ export const ListTile = styled.div`
   text-overflow: ellipsis;
   gap: 16px;
   width: 100%;
+  border-radius: 20px;
   white-space: nowrap;
   padding: 20px 50px;
-  cursor: pointer;
-  background-color: ${(props) =>
-    !props.$visualized ? "rgba(0, 0, 0, .05)" : null};
-  color: ${(props) => (props.$selected ? props.theme.fonts.color : null)};
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary_2};
-    color: ${(props) => props.theme.fonts.color};
-
-    path {
-        fill: ${(props) => props.theme.fonts.color};
-    }
-  }
 `;
 
 export const TileLeading = styled.div`
@@ -98,15 +105,30 @@ export const TileContent = styled.div`
   flex-direction: column;
 `;
 
-export const TileTitle = styled.div`
-  font-size: 16px;
-  font-weight: bold;
+export const TileTitle = styled.h1`
+  font-size: 14px;
+  font-weight: 500;
 `;
 
-export const TileSubtitle = styled.div`
-  font-size: 14px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 200px;
-  color: ${(props) => props.theme.colors.text_secondary};
+export const TileInput = styled.input`
+  font-size: 18px;
+  font-weight: 500;
+  height: 35px;
+  padding: 0 10px;
+  background-color: transparent;
+  border: 2px solid ${(props) => props.theme.colors.primary_2};
+  border-radius: 20px;
+  color: ${(props) => props.theme.colors.primary_dark};
+`;
+
+export const TileButton = styled.button`
+  font-size: 18px;
+  font-weight: 500;
+  width: 150px;
+  cursor: pointer;
+  height: 35px;
+  padding: 0 10px;
+  background-color: ${(props) => props.theme.colors.primary_2};
+  border-radius: 20px;
+  color: ${(props) => props.theme.fonts.color};
 `;

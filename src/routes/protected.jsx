@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { getCurrentUser } from "@/store/slicers/authSlicer";
 
 import { NavbarContentContainer } from "@/styles/global";
@@ -20,13 +19,11 @@ import { Events } from "../pages/events/events";
 import { Contacts } from "../pages/contacts/contacts";
 import { Birthdays } from "../pages/birthdays/birthdays";
 import { Profile } from "../pages/profile/profile";
+import { Notifications } from "../pages/notifications/notifications";
+import { Settings } from "../pages/settings/settings";
+import { ProfileSettings } from "../pages/settings/profile/profile";
 
 const ProtectedRouter = () => {
-  const { "*": wildcard } = useParams();
-
-  const currentPath = wildcard?.split("/") || [];
-  const [basePath, param] = currentPath;
-
   const [isLoading, setIsLoading] = useState(true);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
@@ -151,6 +148,48 @@ const ProtectedRouter = () => {
       ),
       icon: <icons.SVGProfile width="30px" />,
     },
+    {
+      path: "notificacoes",
+      name: "Notificações",
+      hidden: true,
+      component: (
+        <Notifications
+          windowHeight={windowHeight}
+          toastMessage={setToastMessage}
+          modalMessage={setModalMessage}
+          modalInfo={modalMessage}
+        />
+      ),
+      icon: <icons.SVGProfile width="30px" />,
+    },
+    {
+      path: "configuracoes",
+      name: "Configurações",
+      hidden: true,
+      component: (
+        <Settings
+          windowHeight={windowHeight}
+          toastMessage={setToastMessage}
+          modalMessage={setModalMessage}
+          modalInfo={modalMessage}
+        />
+      ),
+      icon: <icons.SVGProfile width="30px" />,
+    },
+    {
+      path: "configuracoes/perfil",
+      name: "Configurações do perfil",
+      hidden: true,
+      component: (
+        <ProfileSettings
+          windowHeight={windowHeight}
+          toastMessage={setToastMessage}
+          modalMessage={setModalMessage}
+          modalInfo={modalMessage}
+        />
+      ),
+      icon: <icons.SVGProfile width="30px" />,
+    },
   ];
 
   useEffect(() => {
@@ -182,11 +221,15 @@ const ProtectedRouter = () => {
   }, [dispatch, isAuthenticated]);
 
   const renderPageContent = () => {
-    const page = pages.find((p) => p.path === basePath);
+    const currentPage = normalizeString(
+      location.pathname.substring(1).toLowerCase()
+    );
+
+    const page = pages.find((p) => p.path === currentPage);
 
     if (!page) return <Error404 />;
 
-    return React.cloneElement(page.component, { param });
+    return page.component;
   };
 
   const getPageData = () => {

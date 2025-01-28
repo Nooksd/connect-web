@@ -122,7 +122,6 @@ export const Box = styled.div`
   background-color: ${(props) => props.theme.colors.grey};
   border-radius: 20px;
   flex-direction: column;
-  margin-bottom: 50px;
   justify-content: start;
   display: flex;
   align-items: center;
@@ -148,14 +147,12 @@ export const Box = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-  margin-top: 30px;
   width: 100%;
   height: min-content;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   justify-items: center;
-  gap: 20px;
 `;
 
 export const ListTile = styled.div`
@@ -165,17 +162,13 @@ export const ListTile = styled.div`
   text-overflow: ellipsis;
   gap: 25px;
   width: 100%;
+  border-radius: 20px;
   white-space: nowrap;
-  padding: 6px 50px;
+  padding: 20px 50px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.secondary_2};
-    color: ${(props) => props.theme.colors.background};
-
-    path {
-      fill: ${(props) => props.theme.colors.background};
-    }
+    background-color: ${(props) => "rgba(0, 0, 0, .05)"};
   }
 `;
 

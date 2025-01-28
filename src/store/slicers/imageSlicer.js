@@ -18,12 +18,12 @@ export const postImage = createAsyncThunk(
 
 export const postAvatar = createAsyncThunk(
   "avatar/post",
-  async (file, { rejectWithValue }) => {
+  async ({file, userId}, { rejectWithValue }) => {
     try {
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const { data } = await innovaApi.post(`/avatar/upload`, formData);
+      const { data } = await innovaApi.post(`/avatar/upload/${userId}`, formData);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
