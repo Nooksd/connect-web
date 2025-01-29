@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as styled from "./profileStyles.js";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentUser } from "@/store/slicers/authSlicer.js";
-import { postAvatar } from "@/store/slicers/imageSlicer.js";
+import { uploadAvatar } from "@/store/slicers/imageSlicer.js";
 
 export const ProfileSettings = ({ windowHeight, toastMessage }) => {
   const { user } = useSelector((state) => state.auth);
@@ -25,7 +25,7 @@ export const ProfileSettings = ({ windowHeight, toastMessage }) => {
     e.preventDefault();
 
     if (selectedFile) {
-      dispatch(postAvatar({ file: selectedFile, userId: user.id })).then(
+      dispatch(uploadAvatar({ file: selectedFile, userId: user.id })).then(
         (result) => {
           if (!result.meta.rejectedWithValue) {
             dispatch(

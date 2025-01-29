@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { innovaApi } from "@/services/http";
 
-export const postImage = createAsyncThunk(
+export const uploadImage = createAsyncThunk(
   "image/post",
   async (file, { rejectWithValue }) => {
     try {
@@ -16,7 +16,7 @@ export const postImage = createAsyncThunk(
   }
 );
 
-export const postAvatar = createAsyncThunk(
+export const uploadAvatar = createAsyncThunk(
   "avatar/post",
   async ({file, userId}, { rejectWithValue }) => {
     try {
@@ -37,27 +37,27 @@ const imageSlicer = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(postAvatar.pending, (state) => {
+      .addCase(uploadAvatar.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(postAvatar.fulfilled, (state, action) => {
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
         state.status = "succeeded";
         console.log(action.payload);
       })
-      .addCase(postAvatar.rejected, (state, action) => {
+      .addCase(uploadAvatar.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
 
     builder
-      .addCase(postImage.pending, (state) => {
+      .addCase(uploadImage.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(postImage.fulfilled, (state, action) => {
+      .addCase(uploadImage.fulfilled, (state, action) => {
         state.status = "succeeded";
         console.log(action.payload);
       })
-      .addCase(postImage.rejected, (state, action) => {
+      .addCase(uploadImage.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

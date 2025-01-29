@@ -37,12 +37,13 @@ export const PostMessageBox = styled.form`
   width: 100%;
   min-height: 60px;
   padding: 0 15px;
-  border-radius: 100px;
+  border-radius: 20px;
   background-color: ${(props) => props.theme.colors.grey};
   display: flex;
   gap: 15px;
   align-items: center;
-  padding: 0 35px;
+  padding: 15px 35px;
+
   position: relative;
 `;
 
@@ -55,9 +56,13 @@ export const PostIconsDiv = styled.div`
   justify-content: center;
 `;
 
-export const Icon = styled.span`
-  font-size: 20px;
-  color: ${(props) => props.theme.colors.primary_2};
+export const createPostContent = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
 `;
 
 export const PostMessageInput = styled.textarea`
@@ -71,8 +76,84 @@ export const PostMessageInput = styled.textarea`
   font-weight: 300;
   outline: none;
   resize: none;
-  padding: 15px 0;
   overflow-y: hidden;
+`;
+
+export const imageButtonDiv = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const closeImageButton = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background-color: ${(props) => props.theme.colors.primary_2};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+`;
+
+export const createPostImage = styled.img`
+  width: 50%;
+  margin-top: 20px;
+  border-radius: 10px;
+  object-fit: cover;
+`;
+
+export const Icon = styled.span`
+  font-size: 20px;
+  cursor: pointer;
+  color: ${(props) => props.theme.colors.primary_2};
+`;
+
+export const HashtagsDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+`;
+
+export const createHashtag = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+`;
+
+export const createHashtagInput = styled.input`
+  width: 100%;
+  height: 40px;
+  border: none;
+  background-color: ${(props) => props.theme.colors.grey};
+  border-radius: 20px;
+  padding: 0 15px;
+  color: ${(props) => props.theme.colors.primary_dark};
+  font-size: 14px;
+  font-weight: 300;
+  outline: none;
+`;
+
+export const sendButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: ${(props) => props.theme.colors.primary_2};
+  border-radius: 20px;
+  color: ${(props) => props.theme.fonts.color};
+  font-size: 14px;
+  font-weight: 300;
+  cursor: pointer;
+  align-self: end;
 `;
 
 export const ListBox = styled.div`
@@ -111,6 +192,7 @@ export const PostContainer = styled.div`
   padding: 20px;
   background-color: ${(props) => props.theme.colors.grey};
   margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 export const PostHeader = styled.div`
@@ -144,10 +226,15 @@ export const UserRole = styled.span`
   font-style: italic;
 `;
 
+export const Spacer = styled.div`
+  flex: 1;
+`;
+
 export const MoreOptions = styled.span`
   font-size: 18px;
-  color: ${(props) => props.theme.colors.secondary_dark};
+  color: ${(props) => props.theme.colors.danger};
   cursor: pointer;
+  align-self: flex-start;
 `;
 
 export const PostContent = styled.div`
@@ -158,13 +245,33 @@ export const PostContent = styled.div`
 `;
 
 export const PostText = styled.p`
-  width: 75%;
-  height: 100px;
+  max-width: 80%;
   font-size: 14px;
+  position: relative;
   color: ${(props) => props.theme.colors.primary_dark};
   line-height: 1.5;
-  text-align: center;
-  white-space: pre-line;
+  text-align: start;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+`;
+
+export const quotes1 = styled.span`
+  position: absolute;
+  top: 0;
+  left: -30px;
+  transform: rotateX(180deg);
+  transform: rotateY(180deg);
+  font-size: 16px;
+  color: ${(props) => props.theme.colors.primary_2};
+`;
+
+export const quotes2 = styled.span`
+  position: absolute;
+  bottom: 0;
+  right: -30px;
+  font-size: 16px;
+  color: ${(props) => props.theme.colors.primary_2};
 `;
 
 export const PostImageBox = styled.div`
@@ -172,7 +279,7 @@ export const PostImageBox = styled.div`
   max-height: 400px;
   display: flex;
   overflow: hidden;
-  margin-top: 15px;
+  margin-top: 20px;
   justify-content: start;
   align-items: start;
 `;
@@ -201,6 +308,7 @@ export const Hashtag = styled.span`
 
 export const Interactions = styled.div`
   display: flex;
+  margin-top: 30px;
   gap: 25px;
 `;
 

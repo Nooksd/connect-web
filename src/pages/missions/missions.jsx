@@ -34,7 +34,7 @@ export const Missions = ({
     if (modalInfo.response !== null) {
       switch (modalInfo.event) {
         case "url":
-          if (modalInfo.userInput) createValidation(modalInfo.userInput);
+          if (modalInfo.userInput && modalInfo.response) createValidation(modalInfo.userInput);
           break;
       }
       modalMessage({

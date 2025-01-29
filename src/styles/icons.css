@@ -1,284 +1,292 @@
 @font-face {
-    font-family: 'icomoon';
-    src:  url('fonts/icomoon.eot?wckfeb');
-    src:  url('fonts/icomoon.eot?wckfeb#iefix') format('embedded-opentype'),
-      url('fonts/icomoon.ttf?wckfeb') format('truetype'),
-      url('fonts/icomoon.woff?wckfeb') format('woff'),
-      url('fonts/icomoon.svg?wckfeb#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-  }
-  
-  [class^="icon-"], [class*=" icon-"] {
-    font-family: 'icomoon' !important;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-  
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .icon-innovaCoin .path1:before {
-    content: "\e924";
-    color: rgb(255, 255, 255);
-  }
-  .icon-innovaCoin .path2:before {
-    content: "\e927";
-    margin-left: -0.9970703125em;
-    color: rgb(255, 255, 255);
-    opacity: 0.2;
-  }
-  .icon-innovaCoin .path3:before {
-    content: "\e928";
-    margin-left: -0.9970703125em;
-    color: rgb(255, 255, 255);
-    opacity: 0.2;
-  }
-  .icon-innovaCoin .path4:before {
-    content: "\e929";
-    margin-left: -0.9970703125em;
-    color: rgb(34, 87, 168);
-    opacity: 0.5;
-  }
-  .icon-innovaCoin .path5:before {
-    content: "\e92a";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path6:before {
-    content: "\e92b";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path7:before {
-    content: "\e92c";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path8:before {
-    content: "\e92d";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path9:before {
-    content: "\e92e";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path10:before {
-    content: "\e92f";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path11:before {
-    content: "\e930";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path12:before {
-    content: "\e931";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path13:before {
-    content: "\e932";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path14:before {
-    content: "\e933";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path15:before {
-    content: "\e934";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path16:before {
-    content: "\e935";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path17:before {
-    content: "\e936";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path18:before {
-    content: "\e937";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path19:before {
-    content: "\e938";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path20:before {
-    content: "\e939";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path21:before {
-    content: "\e93a";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path22:before {
-    content: "\e93b";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path23:before {
-    content: "\e93c";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path24:before {
-    content: "\e93d";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path25:before {
-    content: "\e93e";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path26:before {
-    content: "\e93f";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path27:before {
-    content: "\e940";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-innovaCoin .path28:before {
-    content: "\e941";
-    margin-left: -0.9970703125em;
-    color: rgb(23, 34, 66);
-  }
-  .icon-exit:before {
-    content: "\e942";
-  }
-  .icon-support:before {
-    content: "\e905";
-  }
-  .icon-theme:before {
-    content: "\e90f";
-  }
-  .icon-profile:before {
-    content: "\e915";
-  }
-  .icon-mission:before {
-    content: "\e900";
-  }
-  .icon-comments:before {
-    content: "\e901";
-  }
-  .icon-share:before {
-    content: "\e902";
-  }
-  .icon-like:before {
-    content: "\e903";
-  }
-  .icon-share1:before {
-    content: "\e904";
-  }
-  .icon-dots:before {
-    content: "\e906";
-  }
-  .icon-arrow:before {
-    content: "\e907";
-  }
-  .icon-user:before {
-    content: "\e908";
-  }
-  .icon-lock:before {
-    content: "\e909";
-  }
-  .icon-bell:before {
-    content: "\e90a";
-  }
-  .icon-quotes:before {
-    content: "\e90b";
-  }
-  .icon-role:before {
-    content: "\e90c";
-  }
-  .icon-search:before {
-    content: "\e90d";
-  }
-  .icon-settings:before {
-    content: "\e90e";
-  }
-  .icon-time:before {
-    content: "\e910";
-  }
-  .icon-trophy:before {
-    content: "\e911";
-  }
-  .icon-vote:before {
-    content: "\e912";
-  }
-  .icon-x:before {
-    content: "\e913";
-  }
-  .icon-cake:before {
-    content: "\e914";
-  }
-  .icon-contacts:before {
-    content: "\e916";
-  }
-  .icon-date:before {
-    content: "\e917";
-  }
-  .icon-email:before {
-    content: "\e918";
-  }
-  .icon-events:before {
-    content: "\e919";
-  }
-  .icon-facebook:before {
-    content: "\e91a";
-  }
-  .icon-feed:before {
-    content: "\e91b";
-  }
-  .icon-filter:before {
-    content: "\e91c";
-  }
-  .icon-fotos:before {
-    content: "\e91d";
-  }
-  .icon-goods:before {
-    content: "\e91e";
-  }
-  .icon-hashtag:before {
-    content: "\e91f";
-  }
-  .icon-instagram:before {
-    content: "\e920";
-  }
-  .icon-link:before {
-    content: "\e921";
-  }
-  .icon-linkedin:before {
-    content: "\e922";
-  }
-  .icon-medal:before {
-    content: "\e923";
-  }
-  .icon-phone:before {
-    content: "\e925";
-  }
-  .icon-question:before {
-    content: "\e926";
-  }
-  
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?g6gwl');
+  src:  url('fonts/icomoon.eot?g6gwl#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?g6gwl') format('truetype'),
+    url('fonts/icomoon.woff?g6gwl') format('woff'),
+    url('fonts/icomoon.svg?g6gwl#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-send:before {
+  content: "\e945";
+}
+.icon-like-outline:before {
+  content: "\e944";
+}
+.icon-trash:before {
+  content: "\e943";
+}
+.icon-innovaCoin .path1:before {
+  content: "\e924";
+  color: rgb(255, 255, 255);
+}
+.icon-innovaCoin .path2:before {
+  content: "\e927";
+  margin-left: -0.9970703125em;
+  color: rgb(255, 255, 255);
+  opacity: 0.2;
+}
+.icon-innovaCoin .path3:before {
+  content: "\e928";
+  margin-left: -0.9970703125em;
+  color: rgb(255, 255, 255);
+  opacity: 0.2;
+}
+.icon-innovaCoin .path4:before {
+  content: "\e929";
+  margin-left: -0.9970703125em;
+  color: rgb(34, 87, 168);
+  opacity: 0.5;
+}
+.icon-innovaCoin .path5:before {
+  content: "\e92a";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path6:before {
+  content: "\e92b";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path7:before {
+  content: "\e92c";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path8:before {
+  content: "\e92d";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path9:before {
+  content: "\e92e";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path10:before {
+  content: "\e92f";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path11:before {
+  content: "\e930";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path12:before {
+  content: "\e931";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path13:before {
+  content: "\e932";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path14:before {
+  content: "\e933";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path15:before {
+  content: "\e934";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path16:before {
+  content: "\e935";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path17:before {
+  content: "\e936";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path18:before {
+  content: "\e937";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path19:before {
+  content: "\e938";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path20:before {
+  content: "\e939";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path21:before {
+  content: "\e93a";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path22:before {
+  content: "\e93b";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path23:before {
+  content: "\e93c";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path24:before {
+  content: "\e93d";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path25:before {
+  content: "\e93e";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path26:before {
+  content: "\e93f";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path27:before {
+  content: "\e940";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-innovaCoin .path28:before {
+  content: "\e941";
+  margin-left: -0.9970703125em;
+  color: rgb(23, 34, 66);
+}
+.icon-exit:before {
+  content: "\e942";
+}
+.icon-support:before {
+  content: "\e905";
+}
+.icon-theme:before {
+  content: "\e90f";
+}
+.icon-profile:before {
+  content: "\e915";
+}
+.icon-mission:before {
+  content: "\e900";
+}
+.icon-comments:before {
+  content: "\e901";
+}
+.icon-share:before {
+  content: "\e902";
+}
+.icon-like:before {
+  content: "\e903";
+}
+.icon-share1:before {
+  content: "\e904";
+}
+.icon-dots:before {
+  content: "\e906";
+}
+.icon-arrow:before {
+  content: "\e907";
+}
+.icon-user:before {
+  content: "\e908";
+}
+.icon-lock:before {
+  content: "\e909";
+}
+.icon-bell:before {
+  content: "\e90a";
+}
+.icon-quotes:before {
+  content: "\e90b";
+}
+.icon-role:before {
+  content: "\e90c";
+}
+.icon-search:before {
+  content: "\e90d";
+}
+.icon-settings:before {
+  content: "\e90e";
+}
+.icon-time:before {
+  content: "\e910";
+}
+.icon-trophy:before {
+  content: "\e911";
+}
+.icon-vote:before {
+  content: "\e912";
+}
+.icon-x:before {
+  content: "\e913";
+}
+.icon-cake:before {
+  content: "\e914";
+}
+.icon-contacts:before {
+  content: "\e916";
+}
+.icon-date:before {
+  content: "\e917";
+}
+.icon-email:before {
+  content: "\e918";
+}
+.icon-events:before {
+  content: "\e919";
+}
+.icon-facebook:before {
+  content: "\e91a";
+}
+.icon-feed:before {
+  content: "\e91b";
+}
+.icon-filter:before {
+  content: "\e91c";
+}
+.icon-fotos:before {
+  content: "\e91d";
+}
+.icon-goods:before {
+  content: "\e91e";
+}
+.icon-hashtag:before {
+  content: "\e91f";
+}
+.icon-instagram:before {
+  content: "\e920";
+}
+.icon-link:before {
+  content: "\e921";
+}
+.icon-linkedin:before {
+  content: "\e922";
+}
+.icon-medal:before {
+  content: "\e923";
+}
+.icon-phone:before {
+  content: "\e925";
+}
+.icon-question:before {
+  content: "\e926";
+}

@@ -145,8 +145,8 @@ export const TileLeading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: ${(props) => props.theme.colors.primary_light};
 `;

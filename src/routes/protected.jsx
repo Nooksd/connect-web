@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "@/store/slicers/authSlicer";
 
@@ -13,7 +13,7 @@ import icons from "@/assets/icons";
 
 import { Missions } from "../pages/missions/missions";
 import { Error404 } from "@/pages/error404/404";
-import { Feed } from "@/pages/feed/feed";
+import { Feed } from "@/pages/posts/feed";
 import { Shop } from "../pages/shop/shop";
 import { Events } from "../pages/events/events";
 import { Contacts } from "../pages/contacts/contacts";
@@ -22,8 +22,14 @@ import { Profile } from "../pages/profile/profile";
 import { Notifications } from "../pages/notifications/notifications";
 import { Settings } from "../pages/settings/settings";
 import { ProfileSettings } from "../pages/settings/profile/profile";
+import { Post } from "../pages/posts/post/post";
 
 const ProtectedRouter = () => {
+  const { "*": wildcard } = useParams();
+
+  const currentPath = wildcard?.split(":") || [];
+  const [basePath, param] = currentPath;
+
   const [isLoading, setIsLoading] = useState(true);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
@@ -59,6 +65,20 @@ const ProtectedRouter = () => {
       name: "Feed",
       component: (
         <Feed
+          windowHeight={windowHeight}
+          toastMessage={setToastMessage}
+          modalMessage={setModalMessage}
+          modalInfo={modalMessage}
+        />
+      ),
+      icon: <icons.SVGFeed width="30px" />,
+    },
+    {
+      path: "post/",
+      name: "Postagem",
+      hidden: true,
+      component: (
+        <Post
           windowHeight={windowHeight}
           toastMessage={setToastMessage}
           modalMessage={setModalMessage}
@@ -221,15 +241,14 @@ const ProtectedRouter = () => {
   }, [dispatch, isAuthenticated]);
 
   const renderPageContent = () => {
-    const currentPage = normalizeString(
-      location.pathname.substring(1).toLowerCase()
-    );
+    const page = pages.find((p) => p.path === basePath);
 
-    const page = pages.find((p) => p.path === currentPage);
+    console.log(basePath, param);
 
     if (!page) return <Error404 />;
 
-    return page.component;
+
+    return React.cloneElement(page.component, { param });
   };
 
   const getPageData = () => {

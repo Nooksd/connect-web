@@ -61,11 +61,11 @@ export const likePost = createAsyncThunk(
   }
 );
 
-export const unlikePost = createAsyncThunk(
-  "posts/unlike",
+export const dislikePost = createAsyncThunk(
+  "posts/dislike",
   async (postId, { rejectWithValue }) => {
     try {
-      const { data } = await innovaApi.post(`/post/unlike/${postId}`);
+      const { data } = await innovaApi.post(`/post/dislike/${postId}`);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -105,7 +105,14 @@ export const deleteComment = createAsyncThunk(
 const postsSlicer = createSlice({
   name: "posts",
   initialState: { posts: [], post: {}, status: "idle", error: null },
-  reducers: {},
+  reducers: {
+    updatePosts: (state, action) => {
+      state.posts = action.payload;
+    },
+    updatePost: (state, action) => {
+      state.post = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, (state) => {
@@ -113,7 +120,6 @@ const postsSlicer = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.posts = action.payload.posts;
       })
       .addCase(fetchPosts.rejected, (state, action) => {
@@ -171,13 +177,13 @@ const postsSlicer = createSlice({
       });
 
     builder
-      .addCase(unlikePost.pending, (state) => {
+      .addCase(dislikePost.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(unlikePost.fulfilled, (state) => {
+      .addCase(dislikePost.fulfilled, (state) => {
         state.status = "succeeded";
       })
-      .addCase(unlikePost.rejected, (state, action) => {
+      .addCase(dislikePost.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
@@ -208,4 +214,5 @@ const postsSlicer = createSlice({
   },
 });
 
+export const { updatePosts, updatePost } = postsSlicer.actions;
 export default postsSlicer.reducer;

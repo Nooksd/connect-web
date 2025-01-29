@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { innovaApi } from "@/services/http";
 
 export const fetchMissions = createAsyncThunk(
-  "mission/get-all",
+  "mission/current",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await innovaApi.get(`/mission/get-all`);
+      const { data } = await innovaApi.get(`/mission/current`);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
