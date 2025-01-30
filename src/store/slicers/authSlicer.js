@@ -39,7 +39,7 @@ export const getCurrentUser = createAsyncThunk(
   "users/get-current-user",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await innovaApi.get("/users/get-current-user");
+      const response = await innovaApi.get("/user/get-current-user");
 
       return response.data;
     } catch (error) {
@@ -52,7 +52,7 @@ export const updateCurrentUser = createAsyncThunk(
   "users/update-current-user",
   async (user, { rejectWithValue }) => {
     try {
-      const response = await innovaApi.put(`/users/update/${user.id}`, user);
+      const response = await innovaApi.put(`/user/update/${user.id}`, user);
 
       return response.data;
     } catch (error) {

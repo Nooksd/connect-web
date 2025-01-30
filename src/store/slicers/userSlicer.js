@@ -17,7 +17,7 @@ export const fetchUser = createAsyncThunk(
   "users/fetchUser",
   async (userId, { rejectWithValue }) => {
     try {
-      const { data } = await innovaApi.get(`/users/${userId}`);
+      const { data } = await innovaApi.get(`/user/${userId}`);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -29,7 +29,7 @@ export const updateUser = createAsyncThunk(
   "users/updateUser",
   async (user, { rejectWithValue }) => {
     try {
-      const { data } = await innovaApi.put(`/users/update/${user.id}`, user);
+      const { data } = await innovaApi.put(`/user/update/${user.id}`, user);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -40,7 +40,11 @@ export const updateUser = createAsyncThunk(
 const userSlicer = createSlice({
   name: "users",
   initialState: { users: [], appUser: {}, status: "idle", error: null },
-  reducers: {},
+  reducers: {
+    updateUsers: (state, action) => {
+      state.users = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -83,4 +87,5 @@ const userSlicer = createSlice({
   },
 });
 
+export const { updateUsers } = userSlicer.actions;
 export default userSlicer.reducer;

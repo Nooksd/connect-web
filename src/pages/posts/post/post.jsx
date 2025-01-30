@@ -7,17 +7,17 @@ import {
   commentPost,
   deleteComment,
   updatePost,
+  updatePosts,
 } from "@/store/slicers/postSlicer.js";
 
 export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
-  const { post, isLoading } = useSelector((state) => state.post);
+  const { post, posts, isLoading } = useSelector((state) => state.post);
   const user = useSelector((state) => state.auth.user);
 
   const postId = param;
 
   const [comment, setComment] = useState("");
   const [deleteInfo, setDeleteInfo] = useState({});
-  const [isLiked, setIsLiked] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,9 +31,23 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (post) setIsLiked(post.likes && post.likes.includes(user.id));
-    console.log(post);
-  }, [post]);
+    if (modalInfo.response !== null) {
+      switch (modalInfo.event) {
+        case "deleteComment":
+          if (modalInfo.response) handleDeleteComment();
+          break;
+      }
+
+      modalMessage({
+        title: "",
+        message: "",
+        response: null,
+        event: null,
+        userInput: null,
+        hintText: "",
+      });
+    }
+  }, [modalInfo]);
 
   const handleCommentPost = () => {
     if (comment.length === 0) return;
@@ -46,10 +60,12 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
 
     const newPost = {
       ...post,
-      comments: [...(post.comments ?? []), newComment],
-    }
+      comments: [newComment, ...(post.comments ?? [])],
+    };
+    const newPosts = posts.map((p) => (p.id === post.id ? newPost : p));
 
     dispatch(updatePost(newPost));
+    dispatch(updatePosts(newPosts));
 
     dispatch(
       commentPost({
@@ -76,15 +92,31 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
     });
   };
 
-  const handleDeleteComment = (commentId) => {
+  const handleDeleteCommentConfirm = (commentId) => {
+    setDeleteInfo({
+      postId,
+      commentId,
+    });
+
+    modalMessage({
+      response: null,
+      event: "deleteComment",
+      title: "Tem certeza?",
+      message: `Deseja excluir o comentário?`,
+    });
+  };
+
+  const handleDeleteComment = () => {
     const newPost = {
       ...post,
-      comments: post.comments.filter((comment) => comment.id !== commentId),
-    }
+      comments: post.comments.filter(
+        (comment) => comment.id !== deleteInfo.commentId
+      ),
+    };
 
     dispatch(updatePost(newPost));
 
-    dispatch(deleteComment({ postId, commentId })).then((result) => {
+    dispatch(deleteComment(deleteInfo)).then((result) => {
       if (!result.meta.rejectedWithValue) {
         toastMessage({
           danger: false,
@@ -149,7 +181,10 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
             onChange={(e) => setComment(e.target.value.slice(0, 100))}
           />
         </styled.TileContent>
-        <styled.CommentButton className="icon-send" onClick={() => handleCommentPost()} />
+        <styled.CommentButton
+          className="icon-send"
+          onClick={() => handleCommentPost()}
+        />
       </styled.ListTile>
       <styled.Separator />
 
@@ -164,7 +199,10 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
               <styled.TileSubtitle>{comment.text}</styled.TileSubtitle>
             </styled.TileContent>
             {user.id === comment.ownerId && (
-              <styled.CommentButton className="icon-trash" onClick={() => handleDeleteComment(comment.id)} />
+              <styled.CommentButton
+                className="icon-trash"
+                onClick={() => handleDeleteCommentConfirm(comment.id)}
+              />
             )}
           </styled.ListTile>
         ))}

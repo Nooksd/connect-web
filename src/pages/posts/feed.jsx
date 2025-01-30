@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchPosts,
@@ -7,6 +7,7 @@ import {
   createPost,
   deletePost,
   updatePosts,
+  updatePage,
 } from "@/store/slicers/postSlicer.js";
 import { uploadImage } from "@/store/slicers/imageSlicer.js";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +15,14 @@ import { useNavigate } from "react-router-dom";
 import * as styled from "./feedStyles.js";
 
 export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
-  const { posts } = useSelector((state) => state.post);
+  const { posts, page, hasMorePosts, status } = useSelector(
+    (state) => state.post
+  );
+
   const { user } = useSelector((state) => state.auth);
 
   const [deleteId, setDeleteId] = useState(null);
 
-  const [page, setPage] = useState(1);
   const [postText, setPostText] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [hashtags, setHashtags] = useState([]);
@@ -27,11 +30,32 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const observerRef = useRef(null);
+  const endOfListRef = useRef(null);
+
   useEffect(() => {
-    if (posts.length === 0) {
+    if (page === 1 && posts.length === 0) {
       dispatch(fetchPosts(page));
     }
-  });
+  }, [dispatch, page, posts.length]);
+
+  useEffect(() => {
+    if (!hasMorePosts || status === "loading") return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMorePosts) {
+          dispatch(updatePage(page + 1));
+          dispatch(fetchPosts(page + 1));
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    if (endOfListRef.current) observerRef.current.observe(endOfListRef.current);
+
+    return () => observerRef.current?.disconnect();
+  }, [dispatch, page, hasMorePosts, status]);
 
   useEffect(() => {
     if (modalInfo.response !== null) {
@@ -134,7 +158,6 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
   };
 
   const handleDeletePost = (postId, isYours) => {
-    console.log(postId, isYours);
     if (!isYours) return;
 
     setDeleteId(postId);
@@ -187,6 +210,8 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
 
     dispatch(updatePosts(newPosts));
     dispatch(deletePost(deleteId));
+
+    setDeleteId("");
   };
 
   return (
@@ -263,81 +288,85 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
           </styled.PostMessageBox>
         </styled.avatarInputBox>
         <styled.ListBox>
-          {posts.map((post, index) => {
-            const isLiked = post.likes ? post.likes.includes(user.id) : false;
-            const isYours = post?.ownerId === user.id;
+          {posts &&
+            posts.map((post, index) => {
+              const isLiked = post.likes ? post.likes.includes(user.id) : false;
+              const isYours = post?.ownerId === user.id;
 
-            return (
-              <styled.PostContainer key={index} onClick={() => handleOpenPost(post.id)}>
-                <styled.PostHeader>
-                  <styled.PostAvatar src={post.avatarUrl} />
-                  <styled.UserInfo>
-                    <styled.UserName>{post.name}</styled.UserName>
-                    <styled.UserRole>{post.role}</styled.UserRole>
-                  </styled.UserInfo>
-                  <styled.Spacer />
-                  {isYours && (
-                    <styled.MoreOptions
-                      className="icon-trash"
-                      onClick={() => handleDeletePost(post.id, isYours)}
-                    />
-                  )}
-                </styled.PostHeader>
+              return (
+                <styled.PostContainer key={index}>
+                  <styled.PostHeader>
+                    <styled.PostAvatar src={post.avatarUrl} />
+                    <styled.UserInfo>
+                      <styled.UserName>{post.name}</styled.UserName>
+                      <styled.UserRole>{post.role}</styled.UserRole>
+                    </styled.UserInfo>
+                    <styled.Spacer />
+                    {isYours && (
+                      <styled.MoreOptions
+                        className="icon-trash"
+                        onClick={() => handleDeletePost(post.id, isYours)}
+                      />
+                    )}
+                  </styled.PostHeader>
 
-                <styled.PostContent>
-                  <styled.PostText>
-                    <styled.quotes1 className="icon-quotes" />
-                    <styled.quotes2 className="icon-quotes" />
-                    {post.text}
-                  </styled.PostText>
-                  {post.imageUrl && (
-                    <styled.PostImageBox>
-                      <styled.PostImage src={post.imageUrl} />
-                    </styled.PostImageBox>
-                  )}
-                </styled.PostContent>
-
-                <styled.PostFooter>
-                  <styled.Hashtags>
-                    {post.hashtags &&
-                      post.hashtags.map((tag, index) => (
-                        <styled.Hashtag key={index}>#{tag}</styled.Hashtag>
-                      ))}
-                  </styled.Hashtags>
-
-                  <styled.Interactions>
-                    <styled.IconText>
-                      {isLiked ? (
-                        <styled.Icon
-                          className="icon-like"
-                          onClick={() => handleDislikePost(post.id, isLiked)}
-                        />
-                      ) : (
-                        <styled.Icon
-                          className="icon-like-outline"
-                          onClick={() => handleLikePost(post.id, isLiked)}
-                        />
-                      )}
-                      {post.likes ? post.likes.length : 0}
-                    </styled.IconText>
-                    <styled.IconText>
-                      <styled.Icon
-                        className="icon-comments"
+                  <styled.PostContent>
+                    <styled.PostText>
+                      <styled.quotes1 className="icon-quotes" />
+                      <styled.quotes2 className="icon-quotes" />
+                      {post.text}
+                    </styled.PostText>
+                    {post.imageUrl && (
+                      <styled.PostImageBox
                         onClick={() => handleOpenPost(post.id)}
-                      />
-                      {post.comments.length}
-                    </styled.IconText>
-                    <styled.IconText>
-                      <styled.Icon
-                        className="icon-share"
-                        onClick={() => handleSharePost(post.id)}
-                      />
-                    </styled.IconText>
-                  </styled.Interactions>
-                </styled.PostFooter>
-              </styled.PostContainer>
-            );
-          })}
+                      >
+                        <styled.PostImage src={post.imageUrl} />
+                      </styled.PostImageBox>
+                    )}
+                  </styled.PostContent>
+
+                  <styled.PostFooter>
+                    <styled.Hashtags>
+                      {post.hashtags &&
+                        post.hashtags.map((tag, index) => (
+                          <styled.Hashtag key={index}>#{tag}</styled.Hashtag>
+                        ))}
+                    </styled.Hashtags>
+
+                    <styled.Interactions>
+                      <styled.IconText>
+                        {isLiked ? (
+                          <styled.Icon
+                            className="icon-like"
+                            onClick={() => handleDislikePost(post.id, isLiked)}
+                          />
+                        ) : (
+                          <styled.Icon
+                            className="icon-like-outline"
+                            onClick={() => handleLikePost(post.id, isLiked)}
+                          />
+                        )}
+                        {post.likes ? post.likes.length : 0}
+                      </styled.IconText>
+                      <styled.IconText>
+                        <styled.Icon
+                          className="icon-comments"
+                          onClick={() => handleOpenPost(post.id)}
+                        />
+                        {post.comments.length}
+                      </styled.IconText>
+                      <styled.IconText>
+                        <styled.Icon
+                          className="icon-share"
+                          onClick={() => handleSharePost(post.id)}
+                        />
+                      </styled.IconText>
+                    </styled.Interactions>
+                  </styled.PostFooter>
+                </styled.PostContainer>
+              );
+            })}
+          {posts && <div ref={endOfListRef} style={{ height: "10px" }} />}
         </styled.ListBox>
       </styled.Container>
     </styled.Main>

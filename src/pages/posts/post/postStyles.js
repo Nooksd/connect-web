@@ -20,7 +20,7 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.colors.grey};
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: start;
   padding: 100px 20px 20px 20px;
 `;
@@ -98,7 +98,6 @@ export const quotes2 = styled.span`
 
 export const PostImageBox = styled.div`
   width: 100%;
-  max-height: 400px;
   display: flex;
   overflow: hidden;
   margin-top: 20px;

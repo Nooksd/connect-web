@@ -1,10 +1,17 @@
 import SVGAlert from "@/assets/icons/modal/Alert_icon.jsx";
 import * as styled from "./modalStyles.js";
+import { useEffect } from "react";
 
 const Modal = ({ modalMessage, setModalMessage }) => {
   if (!modalMessage.message) return null;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.classList.add("no-scroll");
+  }, []);
+
   const handleSendResponse = (response) => {
+    document.body.classList.remove("no-scroll");
     setModalMessage({
       title: "",
       event: modalMessage.event,

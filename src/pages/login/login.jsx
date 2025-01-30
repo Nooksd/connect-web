@@ -138,6 +138,8 @@ export const Login = () => {
                 onFocus={() => handleFocus("email")}
                 placeholder="Email de Usuário"
                 type="text"
+                autoComplete="email"
+                name="email"
               />
               {emailError && (
                 <styled.ErrorOnInputField>
@@ -156,6 +158,8 @@ export const Login = () => {
                 onFocus={() => handleFocus("password")}
                 placeholder="Senha de Usuário"
                 type={isPasswordVisible ? "text" : "password"}
+                autoComplete="current-password"
+                name="password"
               />
               {passwordError && (
                 <styled.ErrorOnInputField>

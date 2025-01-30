@@ -17,7 +17,7 @@ export const Missions = ({
   modalMessage,
   modalInfo,
 }) => {
-  const { missions } = useSelector((state) => state.missions);
+  const { missions, isLoading } = useSelector((state) => state.missions);
   const { user } = useSelector((state) => state.auth);
   const [missionId, setMissionId] = useState("");
   const appMissions = ["FEEDPOST", "FEEDHASHTAG", "FEEDIMAGE"];
@@ -120,6 +120,14 @@ export const Missions = ({
       }
     });
   };
+
+  if (isLoading) {
+    return (
+      <styled.Main>
+          <styled.SectionTitle>Carregando...</styled.SectionTitle>
+      </styled.Main>
+    );
+  }
 
   return (
     <styled.Main>

@@ -104,13 +104,23 @@ export const deleteComment = createAsyncThunk(
 
 const postsSlicer = createSlice({
   name: "posts",
-  initialState: { posts: [], post: {}, status: "idle", error: null },
+  initialState: {
+    posts: [],
+    post: {},
+    page: 1,
+    hasMorePosts: true,
+    status: "idle",
+    error: null,
+  },
   reducers: {
     updatePosts: (state, action) => {
       state.posts = action.payload;
     },
     updatePost: (state, action) => {
       state.post = action.payload;
+    },
+    updatePage: (state, action) => {
+      state.page = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -120,7 +130,15 @@ const postsSlicer = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.posts = action.payload.posts;
+        if (state.page === 1) {
+          state.posts = action.payload.posts;
+        } else {
+          state.posts = [...state.posts, ...action.payload.posts];
+        }
+
+        if (action.payload.posts.length === 0) {
+          state.hasMorePosts = false;
+        }
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
@@ -140,79 +158,37 @@ const postsSlicer = createSlice({
         state.error = action.error.message;
       });
 
-    builder
-      .addCase(createPost.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(createPost.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(createPost.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(createPost.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
 
-    builder
-      .addCase(deletePost.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(deletePost.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(deletePost.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(deletePost.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
 
-    builder
-      .addCase(likePost.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(likePost.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(likePost.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(likePost.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
 
-    builder
-      .addCase(dislikePost.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(dislikePost.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(dislikePost.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(dislikePost.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
 
-    builder
-      .addCase(commentPost.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(commentPost.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(commentPost.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(commentPost.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
 
-    builder
-      .addCase(deleteComment.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(deleteComment.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(deleteComment.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(deleteComment.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
   },
 });
 
-export const { updatePosts, updatePost } = postsSlicer.actions;
+export const { updatePosts, updatePost, updatePage } = postsSlicer.actions;
 export default postsSlicer.reducer;

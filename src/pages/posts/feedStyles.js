@@ -192,7 +192,6 @@ export const PostContainer = styled.div`
   padding: 20px;
   background-color: ${(props) => props.theme.colors.grey};
   margin-bottom: 20px;
-  cursor: pointer;
 `;
 
 export const PostHeader = styled.div`
@@ -282,6 +281,7 @@ export const PostImageBox = styled.div`
   margin-top: 20px;
   justify-content: start;
   align-items: start;
+  cursor: pointer;
 `;
 
 export const PostImage = styled.img`

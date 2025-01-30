@@ -7,7 +7,7 @@ import icons from "@/assets/icons";
 import { Profile } from "../profile/profile.jsx";
 
 export const Contacts = ({ windowHeight }) => {
-  const { users } = useSelector((state) => state.user);
+  const { users, isLoading } = useSelector((state) => state.user);
   const [selectedUser, setSelectedUser] = useState("");
   const [search, setSearch] = useState("");
 
@@ -24,6 +24,11 @@ export const Contacts = ({ windowHeight }) => {
     dispatch(fetchUsers(search));
     console.log(search);
   };
+
+  if (isLoading) {
+    return <styled.Loading>Carregando...</styled.Loading>;
+  }
+
 
   return (
     <styled.Main>
