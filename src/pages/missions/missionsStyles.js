@@ -194,7 +194,10 @@ export const TileContent = styled.div`
 
 export const TileTitle = styled.div`
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
+  word-wrap: break-word;  
+  overflow-wrap: break-word; 
+  white-space: pre-line;
 `;
 
 export const TileSubtitle = styled.div`

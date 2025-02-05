@@ -14,7 +14,7 @@ export const Contacts = ({ windowHeight }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (users.length === 0) {
+    if (users && users.length === 0) {
       dispatch(fetchUsers(search));
     }
   }, [dispatch]);
@@ -22,7 +22,6 @@ export const Contacts = ({ windowHeight }) => {
   const searchUser = (e) => {
     e.preventDefault();
     dispatch(fetchUsers(search));
-    console.log(search);
   };
 
   if (isLoading) {

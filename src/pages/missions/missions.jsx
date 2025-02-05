@@ -5,6 +5,7 @@ import {
   verifyCompletion,
   validationCreate,
 } from "@/store/slicers/missionsSlicer.js";
+import { marked } from "marked";
 
 import * as styled from "./missionsStyles.js";
 import icons from "@/assets/icons";
@@ -25,7 +26,7 @@ export const Missions = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (missions.length === 0) {
+    if (missions && missions.length === 0) {
       dispatch(fetchMissions());
     }
   }, [dispatch]);
@@ -121,6 +122,10 @@ export const Missions = ({
     });
   };
 
+  function Message({ text }) {
+    return <span dangerouslySetInnerHTML={{ __html: marked(text) }} />;
+  }
+
   if (isLoading) {
     return (
       <styled.Main>
@@ -151,7 +156,9 @@ export const Missions = ({
                         {formatTimeLeft(mission.endDate)}
                       </styled.TileLeading>
                       <styled.TileContent>
-                        <styled.TileTitle>{mission.text}</styled.TileTitle>
+                        <styled.TileTitle>
+                          <Message text={mission.text} />
+                        </styled.TileTitle>
                       </styled.TileContent>
                       <styled.TileSubtitle>
                         {`+${mission.value}`}

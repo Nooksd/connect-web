@@ -7,6 +7,7 @@ import birthdayReducer from "./slicers/birthdaysSlicer.js";
 import imageReducer from "./slicers/imageSlicer.js";
 import missionsReducer from "./slicers/missionsSlicer.js";
 import notificationsReducer from "./slicers/notificationsSlicer.js";
+import admReducer from "./slicers/admSlicer.js";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     birthdays: birthdayReducer,
     image: imageReducer,
     missions: missionsReducer,
-    notifications: notificationsReducer
+    notifications: notificationsReducer,
+    adm: admReducer
   },
 });
 

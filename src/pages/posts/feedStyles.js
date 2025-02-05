@@ -34,7 +34,7 @@ export const Avatar = styled.img`
 `;
 
 export const PostMessageBox = styled.form`
-  width: 100%;
+  width: 89%;
   min-height: 60px;
   padding: 0 15px;
   border-radius: 20px;
@@ -42,7 +42,7 @@ export const PostMessageBox = styled.form`
   display: flex;
   gap: 15px;
   align-items: center;
-  padding: 15px 35px;
+  padding: 10px 35px;
 
   position: relative;
 `;
@@ -68,7 +68,6 @@ export const createPostContent = styled.div`
 export const PostMessageInput = styled.textarea`
   width: 100%;
   height: min-content;
-  max-height: 100px;
   background-color: transparent;
   border: none;
   color: ${(props) => props.theme.colors.primary_dark};
@@ -158,7 +157,7 @@ export const sendButton = styled.button`
 
 export const ListBox = styled.div`
   width: calc(100% - 30px);
-  height: 80%;
+  height: 80%; 
   margin-left: 30px;
   border-radius: 20px;
   flex-direction: column;
@@ -250,7 +249,7 @@ export const PostText = styled.p`
   color: ${(props) => props.theme.colors.primary_dark};
   line-height: 1.5;
   text-align: start;
-  white-space: normal;
+  white-space: pre-line;
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;
@@ -275,7 +274,6 @@ export const quotes2 = styled.span`
 
 export const PostImageBox = styled.div`
   width: 100%;
-  max-height: 400px;
   display: flex;
   overflow: hidden;
   margin-top: 20px;

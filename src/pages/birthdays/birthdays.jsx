@@ -16,7 +16,7 @@ export const Birthdays = ({ windowHeight }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (birthdays.length === 0) {
+    if (birthdays && birthdays.length === 0) {
       dispatch(fetchBirthdays());
     }
   }, [dispatch]);

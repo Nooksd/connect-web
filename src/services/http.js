@@ -3,7 +3,7 @@ import { refreshAccessToken } from "@/store/slicers/authSlicer";
 import store from "@/store";
 
 export const innovaApi = axios.create({
-  baseURL: "http://localhost:9000",
+  baseURL: "https://api.innova-energy.com.br/",
   withCredentials: true,
 });
 

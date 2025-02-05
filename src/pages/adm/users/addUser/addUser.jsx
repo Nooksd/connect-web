@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/store/slicers/userSlicer.js";
-import { updateUser } from "@/store/slicers/admSlicer.js";
+import { updateUser, createUser } from "@/store/slicers/admSlicer.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -35,8 +35,12 @@ const AddUser = ({ toastMessage, editData }) => {
           userType: result.payload.userType || "USER",
           phoneNumber: result.payload.phoneNumber || "",
           role: result.payload.role || "",
-          entryDate: result.payload.entryDate ? new Date(result.payload.entryDate) : null,
-          birthday: result.payload.birthday ? new Date(result.payload.birthday) : null,
+          entryDate: result.payload.entryDate
+            ? new Date(result.payload.entryDate)
+            : null,
+          birthday: result.payload.birthday
+            ? new Date(result.payload.birthday)
+            : null,
         });
       });
     }
@@ -49,25 +53,43 @@ const AddUser = ({ toastMessage, editData }) => {
 
   const handleSubmit = async () => {
     if (fieldValidator()) {
-      const body = {
-        uid: editData,
-        user: userInfo,
-      };
-      dispatch(updateUser(body)).then((result) => {
-        if (!result.meta.rejectedWithValue) {
-          toastMessage({
-            success: true,
-            title: "Sucesso",
-            message: "Usuário atualizado com sucesso",
-          });
-        } else {
-          toastMessage({
-            danger: true,
-            title: "Error",
-            message: result.payload,
-          });
-        }
-      });
+      if (editData) {
+        const body = {
+          uid: editData,
+          user: userInfo,
+        };
+        dispatch(updateUser(body)).then((result) => {
+          if (!result.meta.rejectedWithValue) {
+            toastMessage({
+              success: true,
+              title: "Sucesso",
+              message: "Usuário atualizado com sucesso",
+            });
+          } else {
+            toastMessage({
+              danger: true,
+              title: "Error",
+              message: result.payload,
+            });
+          }
+        });
+      } else {
+        dispatch(createUser(userInfo)).then((result) => {
+          if (!result.meta.rejectedWithValue) {
+            toastMessage({
+              success: true,
+              title: "Sucesso",
+              message: "Usuário criado com sucesso",
+            });
+          } else {
+            toastMessage({
+              danger: true,
+              title: "Error",
+              message: result.payload,
+            });
+          }
+        });
+      }
     } else {
       toastMessage({
         danger: true,

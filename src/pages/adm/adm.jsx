@@ -3,6 +3,9 @@ import * as styled from "./admStyles.js";
 import Users from "./users/users.jsx";
 import AddUser from "./users/addUser/addUser.jsx";
 import SVGArrowRight from "../../assets/icons/ArrowRight_icon.jsx";
+import Missions from "./missions/missions.jsx";
+import AddMission from "./missions/addMission/addMission.jsx";
+import Validations from "./validation/validation.jsx";
 
 export const Adm = ({
   windowHeight,
@@ -53,6 +56,28 @@ export const Adm = ({
       case "Adicionar Usuário":
       case "Editar Usuário":
         return <AddUser toastMessage={toastMessage} editData={editData} />;
+
+      case "Missões":
+        return (
+          <Missions
+            toastMessage={toastMessage}
+            modalMessage={modalMessage}
+            openPage={handleSelectPage}
+            modalInfo={modalInfo}
+          />
+        );
+      case "Adicionar Missão":
+        return <AddMission toastMessage={toastMessage} editData={editData} />;
+
+      case "Validação":
+        return (
+          <Validations
+            toastMessage={toastMessage}
+            modalMessage={modalMessage}
+            modalInfo={modalInfo}
+          />
+        );
+        
       default:
         alert("Página em construção");
         setPageTrail(["Administrativo"]);

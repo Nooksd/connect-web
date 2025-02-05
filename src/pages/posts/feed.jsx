@@ -11,6 +11,7 @@ import {
 } from "@/store/slicers/postSlicer.js";
 import { uploadImage } from "@/store/slicers/imageSlicer.js";
 import { useNavigate } from "react-router-dom";
+import { marked } from "marked";
 
 import * as styled from "./feedStyles.js";
 
@@ -110,7 +111,6 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
 
     if (imageFile !== null) {
       dispatch(uploadImage(imageFile)).then((result) => {
-        console.log(result);
         if (!result.meta.rejectedWithValue) {
           newPost.imageUrl = result.payload.url;
           dispatch(createPost(newPost)).then((result) => {
@@ -214,6 +214,10 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
     setDeleteId("");
   };
 
+  function Post({ text }) {
+    return <span dangerouslySetInnerHTML={{ __html: marked(text) }} />;
+  }
+
   return (
     <styled.Main>
       <styled.Container $height={window.innerHeight}>
@@ -225,11 +229,10 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
                 placeholder="Compartilhar pensamento..."
                 value={postText}
                 onChange={(e) => {
-                  setPostText(e.target.value.slice(0, 200));
+                  setPostText(e.target.value);
                   e.target.style.height = "auto";
                   e.target.style.height = `${e.target.scrollHeight}px`;
                 }}
-                maxLength={200}
               />
               {imageFile && (
                 <styled.imageButtonDiv>
@@ -245,7 +248,7 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
                 </styled.imageButtonDiv>
               )}
 
-              {hashtags && (
+              {hashtags.length > 0 && (
                 <styled.HashtagsDiv>
                   {hashtags.map((hashtag, index) => (
                     <styled.createHashtag key={index}>
@@ -287,11 +290,10 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
             </styled.PostIconsDiv>
           </styled.PostMessageBox>
         </styled.avatarInputBox>
-        <styled.ListBox>
           {posts &&
             posts.map((post, index) => {
               const isLiked = post.likes ? post.likes.includes(user.id) : false;
-              const isYours = post?.ownerId === user.id;
+              const isYours = post?.ownerId === user.id || user.userType === "ADMIN";
 
               return (
                 <styled.PostContainer key={index}>
@@ -314,7 +316,7 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
                     <styled.PostText>
                       <styled.quotes1 className="icon-quotes" />
                       <styled.quotes2 className="icon-quotes" />
-                      {post.text}
+                      <Post text={post.text} />
                     </styled.PostText>
                     {post.imageUrl && (
                       <styled.PostImageBox
@@ -367,7 +369,6 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
               );
             })}
           {posts && <div ref={endOfListRef} style={{ height: "10px" }} />}
-        </styled.ListBox>
       </styled.Container>
     </styled.Main>
   );

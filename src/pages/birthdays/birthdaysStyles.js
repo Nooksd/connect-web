@@ -10,7 +10,7 @@ export const Main = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 500px;
+  min-width: 500px;
   height: 100%;
   position: relative;
   z-index: 1;
@@ -99,6 +99,7 @@ export const Box = styled.div`
   display: flex;
   align-items: center;
   overflow-y: auto;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: 8px;

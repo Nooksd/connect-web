@@ -5,7 +5,7 @@ export const fetchMissions = createAsyncThunk(
   "mission/current",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await innovaApi.get(`/mission/current`);
+      const { data } = await innovaApi.get(`/mission/get-current`);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -43,7 +43,11 @@ export const validationCreate = createAsyncThunk(
 const missionsSlicer = createSlice({
   name: "missions",
   initialState: { missions: [], status: "idle", error: null },
-  reducers: {},
+  reducers: {
+    updateMissions(state, action) {
+      state.missions = action.payload.missions;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMissions.pending, (state) => {
@@ -85,4 +89,5 @@ const missionsSlicer = createSlice({
   },
 });
 
+export const { updateMissions } = missionsSlicer.actions;
 export default missionsSlicer.reducer;

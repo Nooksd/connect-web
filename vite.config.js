@@ -4,6 +4,12 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    https: {
+      key: "./connect.key",
+      cert: "./connect.crt",
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

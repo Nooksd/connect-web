@@ -9,9 +9,10 @@ import {
   updatePost,
   updatePosts,
 } from "@/store/slicers/postSlicer.js";
+import { marked } from "marked";
 
 export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
-  const { post, posts, isLoading } = useSelector((state) => state.post);
+  const { post, posts } = useSelector((state) => state.post);
   const user = useSelector((state) => state.auth.user);
 
   const postId = param;
@@ -133,7 +134,9 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  function Message({ text }) {
+    return <span dangerouslySetInnerHTML={{ __html: marked(text) }} />;
+  }
 
   return (
     <styled.Main>
@@ -147,7 +150,7 @@ export const Post = ({ param, toastMessage, modalMessage, modalInfo }) => {
           <styled.PostText>
             <styled.quotes1 className="icon-quotes" />
             <styled.quotes2 className="icon-quotes" />
-            {post.text}
+            <Message text={post.text ?? ""} />
           </styled.PostText>
           {post.imageUrl && (
             <styled.PostImageBox>

@@ -73,7 +73,7 @@ export const PostText = styled.p`
   color: ${(props) => props.theme.colors.primary_dark};
   line-height: 1.5;
   text-align: start;
-  white-space: normal;
+  white-space: pre-line;
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;
