@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.2.7",
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.7.5",
     "date-fns": "^4.1.0",
     "lottie-react": "^2.4.1",
