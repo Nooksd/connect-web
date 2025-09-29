@@ -130,14 +130,15 @@ const postsSlicer = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "succeeded";
+
+        if (!action.payload?.posts) {
+          state.hasMorePosts = false;
+          return;
+        }
         if (state.page === 1) {
           state.posts = action.payload.posts;
         } else {
           state.posts = [...state.posts, ...action.payload.posts];
-        }
-
-        if (action.payload.posts.length === 0) {
-          state.hasMorePosts = false;
         }
       })
       .addCase(fetchPosts.rejected, (state, action) => {

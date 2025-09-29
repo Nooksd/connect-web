@@ -25,3 +25,21 @@ body {
   overflow: hidden;
   height: 100vh;
 }
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: "#2257A8";
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: "#B0D159";
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: "#B0D159";
+}

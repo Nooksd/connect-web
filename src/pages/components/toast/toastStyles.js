@@ -10,7 +10,7 @@ const ProgressBarAnimation = keyframes`
 `;
 
 export const ToastContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 100px;
   right: 0;
   z-index: 9999;

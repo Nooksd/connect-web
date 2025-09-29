@@ -11,7 +11,6 @@ export const Main = styled.div`
 
 export const Container = styled.div`
   width: 500px;
-  height: ${(props) => `${props.$height - 220}px`};
   position: relative;
   z-index: 1;
   border-radius: 20px;
@@ -71,25 +70,7 @@ export const ListBox = styled.div`
   justify-content: start;
   display: flex;
   align-items: center;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${(props) => props.theme.colors.primary_2};
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${(props) => props.theme.colors.secondary_2};
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: ${(props) => props.theme.colors.secondary_1};
-  }
+  overflow-y: hidden;
 `;
 
 export const ListWrapper = styled.div`

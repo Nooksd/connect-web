@@ -10,6 +10,7 @@ export const ProfileSettings = ({ windowHeight, toastMessage }) => {
   const dispatch = useDispatch();
 
   const [instagramUrl, setInstagramUrl] = useState(user.instagramUrl);
+  const [password, setPassword] = useState("");
   const [facebookUrl, setFacebookUrl] = useState(user.facebookUrl);
   const [linkedinUrl, setLinkedinUrl] = useState(user.linkedinUrl);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -32,6 +33,7 @@ export const ProfileSettings = ({ windowHeight, toastMessage }) => {
               updateCurrentUser({
                 id: user.id,
                 profilePictureUrl: result.payload.url,
+                password,
                 instagramUrl,
                 facebookUrl,
                 linkedinUrl,
@@ -44,7 +46,7 @@ export const ProfileSettings = ({ windowHeight, toastMessage }) => {
                   message: "Perfil atualizado com sucesso",
                 });
               }
-            })
+            });
           }
         }
       );
@@ -55,6 +57,7 @@ export const ProfileSettings = ({ windowHeight, toastMessage }) => {
           instagramUrl,
           facebookUrl,
           linkedinUrl,
+          password,
         })
       ).then((result) => {
         if (!result.meta.rejectedWithValue) {
@@ -81,6 +84,20 @@ export const ProfileSettings = ({ windowHeight, toastMessage }) => {
           />
         </label>
         <styled.ListBox onSubmit={(e) => handleSubmit(e)}>
+          <styled.ListTile>
+            <styled.TileLeading>
+              <styled.icon className="icon-lock" />
+            </styled.TileLeading>
+            <styled.TileContent>
+              <styled.TileTitle>Senha</styled.TileTitle>
+              <styled.TileInput
+                value={password}
+                type="password"
+                autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </styled.TileContent>
+          </styled.ListTile>
           <styled.ListTile>
             <styled.TileLeading>
               <styled.icon className="icon-linkedin" />

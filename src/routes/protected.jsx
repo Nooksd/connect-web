@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "@/store/slicers/authSlicer";
+import { Link, useNavigate } from "react-router-dom";
 
 import { NavbarContentContainer } from "@/styles/global";
 import Header from "@/pages/components/header/header";
 import Toast from "@/pages/components/toast/toast";
 import Modal from "@/pages/components/modal/modal";
+import GoToTop from "../pages/components/goToTop/gototop";
 
 import { Error404 } from "@/pages/error404/404";
 
@@ -15,6 +17,7 @@ import { profileModule } from "@/routes/profileModule";
 import { adminModule } from "@/routes/adminModule";
 
 const ProtectedRouter = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const { "*": wildcard } = useParams();
   const currentPath = wildcard?.split(":") || [];
   const [basePath, param] = currentPath;
@@ -35,6 +38,7 @@ const ProtectedRouter = () => {
     hintText: "",
   });
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, loading, isAuthenticated } = useSelector((state) => state.auth);
 
@@ -42,15 +46,27 @@ const ProtectedRouter = () => {
 
   if (user?.userType === "ADMIN") pages.push(...adminModule);
 
+  const checkScreenSize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
   useEffect(() => {
-    window.addEventListener("resize", () =>
-      setWindowHeight(window.innerHeight)
-    );
+    checkScreenSize();
+    window.addEventListener("resize", () => {
+      checkScreenSize;
+      setWindowHeight(window.innerHeight);
+    });
+
+    if (isMobile) {
+      navigate("/download-mobile");
+    }
+
     return () =>
-      window.removeEventListener("resize", () =>
-        setWindowHeight(window.innerHeight)
-      );
-  }, []);
+      window.removeEventListener("resize", () => {
+        checkScreenSize;
+        setWindowHeight(window.innerHeight);
+      });
+  }, [isMobile, navigate]);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -100,6 +116,7 @@ const ProtectedRouter = () => {
         selectedPage={basePath}
       />
       {renderPageContent()}
+      <GoToTop />
     </NavbarContentContainer>
   );
 };

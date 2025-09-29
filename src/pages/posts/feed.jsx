@@ -115,7 +115,7 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
           newPost.imageUrl = result.payload.url;
           dispatch(createPost(newPost)).then((result) => {
             if (!result.meta.rejectedWithValue) {
-              setPage(1);
+              dispatch(updatePage(1));
               dispatch(fetchPosts(1));
               toastMessage({
                 danger: false,
@@ -135,7 +135,7 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
     } else {
       dispatch(createPost(newPost)).then((result) => {
         if (!result.meta.rejectedWithValue) {
-          setPage(1);
+          dispatch(updatePage(1));
           dispatch(fetchPosts(1));
           toastMessage({
             danger: false,
@@ -199,7 +199,25 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
     dispatch(dislikePost(postId));
   };
 
-  const handleSharePost = (postId) => {};
+  const handleSharePost = (postId) => {
+    const url = `https://connect.innova-energy.com.br/post/:${postId}`;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toastMessage({
+          danger: false,
+          title: "Copiado!",
+          message: "Link copiado para a área de transferência.",
+        });
+      })
+      .catch((err) => {
+        toastMessage({
+          danger: true,
+          title: "Erro",
+          message: "Não foi possível copiar o link.",
+        });
+      });
+  };
 
   const handleOpenPost = (postId) => {
     navigate(`/post/:${postId}`);
@@ -290,85 +308,86 @@ export const Feed = ({ modalMessage, modalInfo, toastMessage }) => {
             </styled.PostIconsDiv>
           </styled.PostMessageBox>
         </styled.avatarInputBox>
-          {posts &&
-            posts.map((post, index) => {
-              const isLiked = post.likes ? post.likes.includes(user.id) : false;
-              const isYours = post?.ownerId === user.id || user.userType === "ADMIN";
+        {posts &&
+          posts.map((post, index) => {
+            const isLiked = post.likes ? post.likes.includes(user.id) : false;
+            const isYours =
+              post?.ownerId === user.id || user.userType === "ADMIN";
 
-              return (
-                <styled.PostContainer key={index}>
-                  <styled.PostHeader>
-                    <styled.PostAvatar src={post.avatarUrl} />
-                    <styled.UserInfo>
-                      <styled.UserName>{post.name}</styled.UserName>
-                      <styled.UserRole>{post.role}</styled.UserRole>
-                    </styled.UserInfo>
-                    <styled.Spacer />
-                    {isYours && (
-                      <styled.MoreOptions
-                        className="icon-trash"
-                        onClick={() => handleDeletePost(post.id, isYours)}
-                      />
-                    )}
-                  </styled.PostHeader>
+            return (
+              <styled.PostContainer key={index}>
+                <styled.PostHeader>
+                  <styled.PostAvatar src={post.avatarUrl} />
+                  <styled.UserInfo>
+                    <styled.UserName>{post.name}</styled.UserName>
+                    <styled.UserRole>{post.role}</styled.UserRole>
+                  </styled.UserInfo>
+                  <styled.Spacer />
+                  {isYours && (
+                    <styled.MoreOptions
+                      className="icon-trash"
+                      onClick={() => handleDeletePost(post.id, isYours)}
+                    />
+                  )}
+                </styled.PostHeader>
 
-                  <styled.PostContent>
-                    <styled.PostText>
-                      <styled.quotes1 className="icon-quotes" />
-                      <styled.quotes2 className="icon-quotes" />
-                      <Post text={post.text} />
-                    </styled.PostText>
-                    {post.imageUrl && (
-                      <styled.PostImageBox
+                <styled.PostContent>
+                  <styled.PostText>
+                    <styled.quotes1 className="icon-quotes" />
+                    <styled.quotes2 className="icon-quotes" />
+                    <Post text={post.text} />
+                  </styled.PostText>
+                  {post.imageUrl && (
+                    <styled.PostImageBox
+                      onClick={() => handleOpenPost(post.id)}
+                    >
+                      <styled.PostImage src={post.imageUrl} />
+                    </styled.PostImageBox>
+                  )}
+                </styled.PostContent>
+
+                <styled.PostFooter>
+                  <styled.Hashtags>
+                    {post.hashtags &&
+                      post.hashtags.map((tag, index) => (
+                        <styled.Hashtag key={index}>#{tag}</styled.Hashtag>
+                      ))}
+                  </styled.Hashtags>
+
+                  <styled.Interactions>
+                    <styled.IconText>
+                      {isLiked ? (
+                        <styled.Icon
+                          className="icon-like"
+                          onClick={() => handleDislikePost(post.id, isLiked)}
+                        />
+                      ) : (
+                        <styled.Icon
+                          className="icon-like-outline"
+                          onClick={() => handleLikePost(post.id, isLiked)}
+                        />
+                      )}
+                      {post.likes ? post.likes.length : 0}
+                    </styled.IconText>
+                    <styled.IconText>
+                      <styled.Icon
+                        className="icon-comments"
                         onClick={() => handleOpenPost(post.id)}
-                      >
-                        <styled.PostImage src={post.imageUrl} />
-                      </styled.PostImageBox>
-                    )}
-                  </styled.PostContent>
-
-                  <styled.PostFooter>
-                    <styled.Hashtags>
-                      {post.hashtags &&
-                        post.hashtags.map((tag, index) => (
-                          <styled.Hashtag key={index}>#{tag}</styled.Hashtag>
-                        ))}
-                    </styled.Hashtags>
-
-                    <styled.Interactions>
-                      <styled.IconText>
-                        {isLiked ? (
-                          <styled.Icon
-                            className="icon-like"
-                            onClick={() => handleDislikePost(post.id, isLiked)}
-                          />
-                        ) : (
-                          <styled.Icon
-                            className="icon-like-outline"
-                            onClick={() => handleLikePost(post.id, isLiked)}
-                          />
-                        )}
-                        {post.likes ? post.likes.length : 0}
-                      </styled.IconText>
-                      <styled.IconText>
-                        <styled.Icon
-                          className="icon-comments"
-                          onClick={() => handleOpenPost(post.id)}
-                        />
-                        {post.comments.length}
-                      </styled.IconText>
-                      <styled.IconText>
-                        <styled.Icon
-                          className="icon-share"
-                          onClick={() => handleSharePost(post.id)}
-                        />
-                      </styled.IconText>
-                    </styled.Interactions>
-                  </styled.PostFooter>
-                </styled.PostContainer>
-              );
-            })}
-          {posts && <div ref={endOfListRef} style={{ height: "10px" }} />}
+                      />
+                      {post.comments.length}
+                    </styled.IconText>
+                    <styled.IconText>
+                      <styled.Icon
+                        className="icon-share"
+                        onClick={() => handleSharePost(post.id)}
+                      />
+                    </styled.IconText>
+                  </styled.Interactions>
+                </styled.PostFooter>
+              </styled.PostContainer>
+            );
+          })}
+        {posts && <div ref={endOfListRef} style={{ height: "10px" }} />}
       </styled.Container>
     </styled.Main>
   );

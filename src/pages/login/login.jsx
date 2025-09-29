@@ -5,10 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import * as styled from "./loginStyles.js";
 
-import icons from '@/assets/icons';
+import icons from "@/assets/icons";
 import SVGlogowhite from "../../assets/logo/innova_logo_white.jsx";
 
 export const Login = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepConnection, setkeepConnection] = useState(false);
@@ -23,14 +24,29 @@ export const Login = () => {
 
   const errorTimerRef = useRef(null);
 
+  const checkScreenSize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  useEffect(() => {
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    if (isMobile) {
+      navigate("/download-mobile");
+    }
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, [isMobile, navigate]);
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || email.trim() === "") {
       setEmailError("Campo de email não pode estar vazio");
       return false;
-    } else if (!emailRegex.test(email)) {
-      setEmailError("Email inválido.");
+    } else if (email.length < 3) {
+      setEmailError("Login inválido.");
       return false;
     } else {
       setEmailError("");
@@ -69,7 +85,7 @@ export const Login = () => {
       keepConnection,
     };
     dispatch(loginUser(loginCredentials)).then((result) => {
-      if (result.meta.requestStatus = "fulfilled") {
+      if ((result.meta.requestStatus = "fulfilled")) {
         setEmail("");
         setPassword("");
         navigate("/feed");
@@ -118,11 +134,15 @@ export const Login = () => {
   return (
     <styled.LoginContainer>
       <styled.GreenLoginBlock>
-        <styled.BlueLoginBlockBefore />
         <styled.BlueLoginBlock>
           <Link to="/feed">
             <styled.SkipButton>
-              <icons.SVGArrowDown width="25" height="25" open={false} fill="white" />
+              <icons.SVGArrowDown
+                width="25"
+                height="25"
+                open={false}
+                fill="white"
+              />
             </styled.SkipButton>
           </Link>
           <SVGlogowhite fill="white" width="220px" />
@@ -136,7 +156,7 @@ export const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => handleBlur("email")}
                 onFocus={() => handleFocus("email")}
-                placeholder="Email de Usuário"
+                placeholder="Login de Usuário"
                 type="text"
                 autoComplete="email"
                 name="email"
@@ -210,7 +230,6 @@ export const Login = () => {
             </styled.ErrorMessage>
           )}
         </styled.BlueLoginBlock>
-        <styled.BlueLoginBlockAfter />
       </styled.GreenLoginBlock>
     </styled.LoginContainer>
   );

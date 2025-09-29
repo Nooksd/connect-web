@@ -35,6 +35,16 @@ export const NavbarMenuContentContainer = styled.div`
   input {
     background-color: #f6f8fd;
   }
+
+  @media (max-width: 1600px) {
+    transform: scale(0.9);
+  }
+  @media (max-width: 1440px) {
+    transform: scale(0.8);
+  }
+  @media (max-width: 1280px) {
+    transform: scale(0.7);
+  }
 `;
 
 export const NavbarContentContainer = styled.div`

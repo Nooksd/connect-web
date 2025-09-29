@@ -3,14 +3,15 @@ import { Settings } from "../pages/settings/settings";
 import { ProfileSettings } from "../pages/settings/profile/profile";
 
 import icons from "@/assets/icons";
+import { Notifications } from "../pages/notifications/notifications";
 
 export const profileModule = [
   {
     path: "perfil",
     name: "Perfil",
     hidden: true,
-    component: (<Profile />),
-    icon: (<icons.SVGProfile width="30px" />),
+    component: <Profile />,
+    icon: <icons.SVGProfile width="30px" />,
   },
   {
     path: "configuracoes",
@@ -25,5 +26,12 @@ export const profileModule = [
     hidden: true,
     component: <ProfileSettings />,
     icon: <icons.SVGProfile width="30px" />,
-  }
+  },
+  {
+    path: "notificacoes",
+    name: "Notificações",
+    hidden: true,
+    component: <Notifications />,
+    icon: <icons.SVGProfile width="30px" />,
+  },
 ];

@@ -3,12 +3,11 @@ import * as styled from "./modalStyles.js";
 import { useEffect } from "react";
 
 const Modal = ({ modalMessage, setModalMessage }) => {
-  if (!modalMessage.message) return null;
-
   useEffect(() => {
+    if (!modalMessage.message) return;
     window.scrollTo(0, 0);
     document.body.classList.add("no-scroll");
-  }, []);
+  }, [modalMessage.message]);
 
   const handleSendResponse = (response) => {
     document.body.classList.remove("no-scroll");
@@ -29,8 +28,12 @@ const Modal = ({ modalMessage, setModalMessage }) => {
     }));
   };
 
+  if (!modalMessage.message) return null;
+
   return (
-    <styled.modalBackgroundDiv onClick={() => handleSendResponse({ confirmed: false })}>
+    <styled.modalBackgroundDiv
+      onClick={() => handleSendResponse({ confirmed: false })}
+    >
       <styled.modalContainerDiv onClick={(e) => e.stopPropagation()}>
         <styled.modalAlertSvgDiv>
           <SVGAlert width="100%" height="100%" />
@@ -47,11 +50,18 @@ const Modal = ({ modalMessage, setModalMessage }) => {
           </styled.inputWrapper>
         )}
         <styled.responseButtonDiv>
-          <styled.responseButton onClick={() => handleSendResponse({ confirmed: false })}>
+          <styled.responseButton
+            onClick={() => handleSendResponse({ confirmed: false })}
+          >
             Cancelar
           </styled.responseButton>
           <styled.responseButton
-            onClick={() => handleSendResponse({ confirmed: true, input: modalMessage.userInput })}
+            onClick={() =>
+              handleSendResponse({
+                confirmed: true,
+                input: modalMessage.userInput,
+              })
+            }
           >
             Confirmar
           </styled.responseButton>

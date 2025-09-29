@@ -41,7 +41,6 @@ export const SectionTitle = styled.h1`
 
 export const Section = styled.div`
   width: min-content;
-  height: ${(props) => `${props.$height - 265}px`};
 `;
 
 export const congratsButton = styled.button`
@@ -99,25 +98,6 @@ export const Box = styled.div`
   display: flex;
   align-items: center;
   overflow-y: auto;
-  overflow-x: hidden;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${(props) => props.theme.colors.primary_2};
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${(props) => props.theme.colors.secondary_2};
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: ${(props) => props.theme.colors.secondary_1};
-  }
 `;
 
 export const ListWrapper = styled.div`
